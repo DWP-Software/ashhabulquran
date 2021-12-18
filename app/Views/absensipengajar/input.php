@@ -51,6 +51,19 @@
                         <input autocomplete="off" type="radio" name="ket" value="Izin"> Izin
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <label for="foto" class="col-sm-2 col-form-label label">Foto</label>
+                    <div class="col-sm-1">
+                        <img class="img-thumbnail img-preview" src="/absenimg/default.jpg" alt="">
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fotoo" name="foto" onchange="previewImg()">
+                            <p style="color: red">Ekstensi yang diperbolehkan .png | .jpg | .jpeg (Ukuran Max 2 MB dan Nama File Sesuai Nama)</p>
+                            <label for="foto" class="custom-file-label" style="background:lightgrey">Masukkan Gambar</label>
+                        </div>
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-danger">Reset</button>
             </form>

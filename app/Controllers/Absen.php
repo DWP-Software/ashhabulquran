@@ -25,8 +25,8 @@ class Absen extends Controller
         } elseif (session()->get('role') == 'Pengajar') {
             $data['getAbsen'] = $this->model->getAbsenPengajar(false, session()->get('id_data'));
         }
-        $data['title'] = 'Data absenpengajar';
-        $data['ket'] = ['Data absenpengajar', '<li class="breadcrumb-item active"><a href="/absen">Data Absen</a></li>'];
+        $data['title'] = 'Data Absen Pengajar';
+        $data['ket'] = ['Data Absen Pengajar', '<li class="breadcrumb-item active"><a href="/absen">Data Absen</a></li>'];
         return view('absensipengajar/index', $data);
     }
 
@@ -46,22 +46,31 @@ class Absen extends Controller
     public function add()
     {
         $request = \Config\Services::request();
+        $file = $request->getFile('foto');
+        if ($file->getError() == 4) {
+            $nm = "default.jpg";
+        } else {
+            $nm = $file->getRandomName();
+            $file->move('absenimg', $nm);
+        }
         if (session()->get('role') == 'Admin') {
             $kls = $request->getPost('id_kelas');
             $x = $this->kls->getKelas($kls);
             $data = array(
                 'id_pengajar' => $x->id_pengajar,
                 'id_kelas' => $kls,
-                'tanggal'   =>  date('Y-m-d h:m:s'),
+                'tanggal'   =>  date('Y-m-d'),
                 'keterangan' => $request->getPost('ket'),
+                'foto' => $nm
             );
         } elseif (session()->get('role') == 'Pengajar') {
             $kls = $request->getPost('id_kelas');
             $data = array(
                 'id_pengajar' => session()->get('id_data'),
                 'id_kelas' => $kls,
-                'tanggal'   =>  date('Y-m-d h:m:s'),
+                'tanggal'   =>  date('Y-m-d'),
                 'keterangan' => $request->getPost('ket'),
+                'foto' => $nm
             );
         }
         $this->model->saveAbsen($data);
@@ -72,14 +81,15 @@ class Absen extends Controller
     public function edit($id_absen)
     {
         $getAbsen = $this->model->getAbsenPengajar($id_absen);
+        // dd($getAbsen);
         if (isset($getAbsen)) {
-            $data['absen'] = $getAbsen;
+            $data['absen'] = $this->model->isi($getAbsen->id_absen);
             $data['title']  = 'Edit Data ';
             $data['ket'] = ['Edit Data absen', '<li class="breadcrumb-item active"><a href="/absen">Data Absen</a></li>', '<li class="breadcrumb-item active">Edit Data galeri<li>'];
-            // dd($data['absen']);
             if (session()->get('role') == 'Admin') {
-                $data['pengajar'] = $this->pengajar->getDatapengajar();
+                $data['pengajar'] = $this->pengajar->data();
             }
+            // dd($data);
             return view('absensipengajar/edit', $data);
         } else {
 
@@ -91,15 +101,27 @@ class Absen extends Controller
     public function update()
     {
         $request = \Config\Services::request();
-
+        $file = $request->getFile('foto');
+        if ($file->getError() == 4) {
+            $nm = $request->getPost('lama');
+        } else {
+            $nm = $file->getRandomName();
+            $file->move('absenimg', $nm);
+            if ($request->getPost('lama') == 'default.jpg') {
+                // continue;
+            } else {
+                // unlink('galeriimg/' . $request->getPost('lama'));
+            }
+        }
         $id_absen = $request->getPost('id_absen');
         $kls = $request->getPost('id_kelas');
         $x = $this->kls->getKelas($kls);
         $data = array(
             'id_pengajar' => $x->id_pengajar,
             'id_kelas' => $kls,
-            'tanggal'   =>  date('Y-m-d h:m:s'),
+            'tanggal'   =>  date('Y-m-d'),
             'keterangan' => $request->getPost('ket'),
+            'foto' => $nm
         );
         $this->model->editAbsen($data, $id_absen);
 

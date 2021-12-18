@@ -12,14 +12,14 @@ class AbsenPengajarModel extends Model
     {
         if ($id_absen === false and $id === false) {
             return $this->db->table('absenpengajar')
-                ->select('id_absen, tanggal, nama, absenpengajar.keterangan, nama_kelas')
+                ->select('id_absen, tanggal, nama, absenpengajar.keterangan, nama_kelas, absenpengajar.foto')
                 ->join('pengajar', 'pengajar.id_pengajar = absenpengajar.id_pengajar')
                 ->join('kelas', 'kelas.id_kelas = absenpengajar.id_kelas')
                 ->orderBy('id_absen', 'DESC')
                 ->get()->getResultArray();
         } elseif ($id_absen === false and $id != false) {
             return $this->db->table('absenpengajar')
-                ->select('id_absen, tanggal, nama, absenpengajar.keterangan, nama_kelas')
+                ->select('id_absen, tanggal, nama, absenpengajar.keterangan, nama_kelas, absenpengajar.foto')
                 ->join('pengajar', 'pengajar.id_pengajar = absenpengajar.id_pengajar')
                 ->join('kelas', 'kelas.id_kelas = absenpengajar.id_kelas')
                 ->where('absenpengajar.id_pengajar', $id)
@@ -28,11 +28,22 @@ class AbsenPengajarModel extends Model
         } elseif ($id_absen != false and $id === false) {
             return $this->db->table('absenpengajar')
                 // ->select('id_absen, tanggal, nama, absenpengajar.keterangan, nama_kelas')
+                // ->select('id_absen, tanggal, nama, absenpengajar.keterangan, nama_kelas, absenpengajar.foto')
                 ->join('pengajar', 'pengajar.id_pengajar = absenpengajar.id_pengajar')
                 ->join('kelas', 'kelas.id_kelas = absenpengajar.id_kelas')
                 ->where('id_absen', $id_absen)
                 ->get()->getRow();
         }
+    }
+
+    public function isi($id_absen)
+    {
+        return $this->db->table('absenpengajar')
+            ->select('absenpengajar.keterangan, id_absen, pengajar.id_pengajar, nama_kelas, kelas.id_kelas, tanggal, absenpengajar.foto')
+            ->join('pengajar', 'pengajar.id_pengajar = absenpengajar.id_pengajar')
+            ->join('kelas', 'kelas.id_kelas = absenpengajar.id_kelas')
+            ->where('id_absen', $id_absen)
+            ->get()->getRow();
     }
 
     public function absen($id, $b, $y)
@@ -44,7 +55,7 @@ class AbsenPengajarModel extends Model
             ->where('absenpengajar.id_pengajar', $id)
             ->where('month(absenpengajar.tanggal)', $b)
             ->where('year(absenpengajar.tanggal)', $y)
-            ->where('absenpengajar.keterangan', 'hadir')
+            ->where('absenpengajar.keterangan != ', 'alfa')
             ->countAllResults();
     }
 

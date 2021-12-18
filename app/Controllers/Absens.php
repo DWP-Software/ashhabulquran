@@ -25,80 +25,87 @@ class Absens extends Controller
         $data['getAbsen'] = [];
         if (session()->get('role') == 'Pengajar') {
             $x = $this->model->tot(session()->get('id_data'));
+            // dd($tgl);
             // dd($x);
             if ($x != false) {
                 $data['getAbsen'] = $x;
                 for ($i = 0; $i < count($x); $i++) {
-                    $d = $this->model->totket(session()->get('id_data'), 'hadir', $x[$i]['id_kelas']);
+                    $d = $this->model->totket(session()->get('id_data'), 'hadir', $x[$i]['id_kelas'], $x[$i]['tanggal']);
                     if ($d != NULL) {
-                        $hadir[$i] = $this->model->totket(session()->get('id_data'), 'hadir', $x[$i]['id_kelas'])[0];
+                        $hadir[$i] = $this->model->totket(session()->get('id_data'), 'hadir', $x[$i]['id_kelas'], $x[$i]['tanggal'])[0];
                     } else {
                         $hadir[$i]['jml'] = '0';
                     }
-                    $a = $this->model->totket(session()->get('id_data'), 'izin', $x[$i]['id_kelas']);
+                    $a = $this->model->totket(session()->get('id_data'), 'izin', $x[$i]['id_kelas'], $x[$i]['tanggal']);
                     if ($a != NULL) {
-                        $izin[$i] = $this->model->totket(session()->get('id_data'), 'izin', $x[$i]['id_kelas'])[0];
+                        $izin[$i] = $this->model->totket(session()->get('id_data'), 'izin', $x[$i]['id_kelas'], $x[$i]['tanggal'])[0];
                     } else {
                         $izin[$i]['jml'] = '0';
                     }
-                    $b = $this->model->totket(session()->get('id_data'), 'alfa', $x[$i]['id_kelas']);
+                    $b = $this->model->totket(session()->get('id_data'), 'alfa', $x[$i]['id_kelas'], $x[$i]['tanggal']);
                     if ($b != NULL) {
-                        $alfa[$i] = $this->model->totket(session()->get('id_data'), 'alfa', $x[$i]['id_kelas'])[0];
+                        $alfa[$i] = $this->model->totket(session()->get('id_data'), 'alfa', $x[$i]['id_kelas'], $x[$i]['tanggal'])[0];
                     } else {
                         $alfa[$i]['jml'] = '0';
                     }
-                    $c = $this->model->totket(session()->get('id_data'), 'sakit', $x[$i]['id_kelas']);
+                    $c = $this->model->totket(session()->get('id_data'), 'sakit', $x[$i]['id_kelas'], $x[$i]['tanggal']);
                     if ($c != NULL) {
-                        $sakit[$i] = $this->model->totket(session()->get('id_data'), 'sakit', $x[$i]['id_kelas'])[0];
+                        $sakit[$i] = $this->model->totket(session()->get('id_data'), 'sakit', $x[$i]['id_kelas'], $x[$i]['tanggal'])[0];
                     } else {
                         $sakit[$i]['jml'] = '0';
                     }
+
+                    $jml[] = count($this->santri->getDatasantri(false, $x[$i]['id_kelas']));
                 }
-                // dd($x);
+                // dd($hadir);
                 $data['hadir'] = $hadir;
                 $data['izin'] = $izin;
                 $data['alfa'] = $alfa;
                 $data['sakit'] = $sakit;
+                $data['jml'] = $jml;
             }
             // dd($data['izin']);
             $data['kelas'] = $this->pengajar->getDatapengajar(false, session()->get('id_data'));
-            // dd($data['kelas']);
+            // dd($data);
         } elseif (session()->get('role') == 'Admin') {
-            $x = $this->model->totabsen();
+            $x = $this->model->totsen();
             // dd($x);
             if ($x != false) {
                 $data['getAbsen'] = $x;
                 for ($i = 0; $i < count($x); $i++) {
-                    $d = $this->model->absensan('hadir', $x[$i]['id_kelas']);
+                    $d = $this->model->absensan('hadir', $x[$i]['id_kelas'], $x[$i]['tanggal']);
                     if ($d != NULL) {
-                        $hadir[$i] = $this->model->absensan('hadir', $x[$i]['id_kelas'])[0];
+                        $hadir[$i] = $this->model->absensan('hadir', $x[$i]['id_kelas'], $x[$i]['tanggal'])[0];
                     } else {
                         $hadir[$i]['jml'] = '0';
                     }
-                    $a = $this->model->absensan('izin', $x[$i]['id_kelas']);
+                    $a = $this->model->absensan('izin', $x[$i]['id_kelas'], $x[$i]['tanggal']);
                     if ($a != NULL) {
-                        $izin[$i] = $this->model->absensan('izin', $x[$i]['id_kelas'])[0];
+                        $izin[$i] = $this->model->absensan('izin', $x[$i]['id_kelas'], $x[$i]['tanggal'])[0];
                     } else {
                         $izin[$i]['jml'] = '0';
                     }
-                    $b = $this->model->absensan('alfa', $x[$i]['id_kelas']);
+                    $b = $this->model->absensan('alfa', $x[$i]['id_kelas'], $x[$i]['tanggal']);
                     if ($b != NULL) {
-                        $alfa[$i] = $this->model->absensan('alfa', $x[$i]['id_kelas'])[0];
+                        $alfa[$i] = $this->model->absensan('alfa', $x[$i]['id_kelas'], $x[$i]['tanggal'])[0];
                     } else {
                         $alfa[$i]['jml'] = '0';
                     }
-                    $c = $this->model->absensan('sakit', $x[$i]['id_kelas']);
+                    $c = $this->model->absensan('sakit', $x[$i]['id_kelas'], $x[$i]['tanggal']);
                     if ($c != NULL) {
-                        $sakit[$i] = $this->model->absensan('sakit', $x[$i]['id_kelas'])[0];
+                        $sakit[$i] = $this->model->absensan('sakit', $x[$i]['id_kelas'], $x[$i]['tanggal'])[0];
                     } else {
                         $sakit[$i]['jml'] = '0';
                     }
+                    $jml[] = count($this->santri->getDatasantri(false, $x[$i]['id_kelas']));
                 }
                 // dd($x);
+                $data['jml'] = $jml;
                 $data['hadir'] = $hadir;
                 $data['izin'] = $izin;
                 $data['alfa'] = $alfa;
                 $data['sakit'] = $sakit;
+                // $data['jml'] = $jml;
             }
             // dd($data['izin']);
             $data['kelas'] = $this->kls->getKelas();
@@ -107,9 +114,10 @@ class Absens extends Controller
             $data['getAbsens'] = $this->model->getAbsenSantri(false, session()->get('id_data'));
         }
 
-        $data['title'] = 'Data absensantri';
-        $data['ket'] = ['Data absensantri', '<li class="breadcrumb-item active"><a href="/absens">Data Absen</a></li>'];
+        $data['title'] = 'Data Absen Santri';
+        $data['ket'] = ['Data Absen Santri', '<li class="breadcrumb-item active"><a href="/absens">Data Absen</a></li>'];
         // dd($data);
+        // dd($jml);
         return view('absensisantri/index', $data);
     }
 
@@ -149,24 +157,24 @@ class Absens extends Controller
         for ($i = 0; $i < count($santri); $i++) {
             $data = array(
                 'id_santri' => $santri[$i],
-                'tanggal'   =>  date('Y-m-d h:i:s'),
+                'tanggal'   =>  date('Y-m-d'),
                 'keterangan' => $request->getPost('ket' . $santri[$i]),
             );
             $this->model->saveAbsen($data);
         }
-        session()->setFlashdata('pesan_absen', 'Data galeri Ditambahkan.');
+        session()->setFlashdata('pesan_absen', 'Data absen Ditambahkan.');
         return redirect()->to('/absens/index');
     }
 
-    public function edit($id_kelas)
+    public function edit($id_kelas, $tgl)
     {
-        $getAbsens = $this->model->cariabsen($id_kelas);
+        $getAbsens = $this->model->cariabsen(session($id_kelas));
         if (isset($getAbsens)) {
-            $data['title'] = 'Tambah Absen';
+            $data['title'] = 'Edit Absen';
             $data['ket'] = ['Input Data Absen', '<li class="breadcrumb-item active"><a href="/absens">Data Absen</a></li>', '<li class="breadcrumb-item active">Input Data galeri<li>'];
             if (session()->get('role') == 'Admin' or session()->get('role') == 'Pengajar') {
                 $data['santri'] = $this->santri->getDatasantri(false, $id_kelas);
-                $data['absen'] = $this->model->data($id_kelas);
+                $data['absen'] = $this->model->data($id_kelas, $tgl);
                 if ($data['santri'] == NULL) {
                     session()->setFlashdata('warning_absen', 'Data santri tidak ada');
                     return redirect()->to('/absens/index');
@@ -187,18 +195,20 @@ class Absens extends Controller
     {
         $request = \Config\Services::request();
         $id_absen = $request->getPost('id_absen');
-        $santri = $request->getPost('id_santri');
-        for ($i = 0; $i < count($santri); $i++) {
+        // dd($id_absen);
+        $santri = $request->getPost('id_san');
+        for ($i = 0; $i < count($id_absen); $i++) {
+            // $this->model->hapusAbsen($id_absen[$i]);
             $data = array(
                 'id_santri' => $santri[$i],
-                'tanggal'   =>  date('Y-m-d h:i:s'),
+                'tanggal'   =>  date('Y-m-d'),
                 'keterangan' => $request->getPost('ket' . $santri[$i]),
             );
             $this->model->editAbsen($data, $id_absen[$i]);
         }
 
-        session()->setFlashdata('pesan_absen', 'Data Absen Berhasi Diedit.');
-        return redirect()->to('/absens');
+        session()->setFlashdata('pesan_absen', 'Data Absen Berhasil Diedit.');
+        return redirect()->to('/absens/index');
     }
 
     // public function delete($id_absen)
@@ -215,13 +225,48 @@ class Absens extends Controller
     //     }
     // }
 
-    public function view($id_kelas)
+    public function view($id_kelas, $tgl)
     {
         $data['title'] = 'View Data Absen';
-        $data['kelas'] = $this->kls->getKelas($id_kelas);
+        $k = $this->kls->getKelas($id_kelas);
+        $data['kelas'] = $k;
         // $data['santri'] = $this->santri->getDatasantri(false, $id_kelas);
-        $data['absen'] = $this->model->data($id_kelas);
-        $data['ket'] = ['View Data Absen', '<li class="breadcrumb-item active"><a href="/absens">Data Absens</a></li>', '<li class="breadcrumb-item active">View Data galeri<li>'];
+        $x = $this->model->data($id_kelas, $tgl);
+        $data['absen'] = $x;
+        $data['jml'] = count($x);
+
+        $d = $this->model->totket(session()->get('id_data'), 'hadir', $k->id_kelas, $tgl);
+        if ($d != NULL) {
+            $hadir = $this->model->totket(session()->get('id_data'), 'hadir', $k->id_kelas, $tgl)[0];
+        } else {
+            $hadir['jml'] = '0';
+        }
+        $a = $this->model->totket(session()->get('id_data'), 'izin', $k->id_kelas, $tgl);
+        if ($a != NULL) {
+            $izin = $this->model->totket(session()->get('id_data'), 'izin', $k->id_kelas, $tgl)[0];
+        } else {
+            $izin['jml'] = '0';
+        }
+        $b = $this->model->totket(session()->get('id_data'), 'alfa', $k->id_kelas, $tgl);
+        if ($b != NULL) {
+            $alfa = $this->model->totket(session()->get('id_data'), 'alfa', $k->id_kelas, $tgl)[0];
+        } else {
+            $alfa['jml'] = '0';
+        }
+        $c = $this->model->totket(session()->get('id_data'), 'sakit', $k->id_kelas, $tgl);
+        if ($c != NULL) {
+            $sakit = $this->model->totket(session()->get('id_data'), 'sakit', $k->id_kelas, $tgl)[0];
+        } else {
+            $sakit['jml'] = '0';
+        }
+
+        $data['i'] =  $izin;
+        $data['h'] =  $hadir;
+        $data['s'] =  $sakit;
+        $data['a'] =  $alfa;
+        $data['tgl'] = $tgl;
+        // dd($data);
+        $data['ket'] = ['View Data Absen', '<li class="breadcrumb-item active"><a href="/absens">Data Absens</a></li>', '<li class="breadcrumb-item active">View Data Absen<li>'];
         return view('absensisantri/view', $data);
     }
 

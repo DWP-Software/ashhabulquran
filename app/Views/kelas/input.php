@@ -30,9 +30,9 @@
                         <select class="form-control select2bs4" name="pengajar" id="pengajar" required>
                             <option value="">Pilih Pengajar </option>
                             <?php
-                            foreach ($pengajar as $pengajar) {
+                            foreach ($pengajar as $p) {
                             ?>
-                                <option value="<?php echo $pengajar['id_pengajar'] ?>"><?php echo $pengajar['nama'] ?></option>
+                                <option value="<?php echo $p['id_pengajar'] ?>"><?php echo $p['nama'] ?></option>
                             <?php } ?>
                         </select>
                     </div>

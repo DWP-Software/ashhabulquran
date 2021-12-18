@@ -52,7 +52,7 @@
                         </div>
                     </div><!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered">
+                        <table id="example1" class="table table-bordered">
                             <thead class="" style="text-align: center;">
                                 <tr>
                                     <th>
@@ -64,6 +64,7 @@
                                     <th>Surah (Juz)</th>
                                     <th>Akhir Hafalan</th>
                                     <th>Status</th>
+                                    <th>Ditambahkan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -82,6 +83,7 @@
                                         <td><?= $data['nama_surah']; ?> (Juz <?= $data['juz']; ?>)</td>
                                         <td><?= $data['akhir_hafalan']; ?></td>
                                         <td><?= $data['status']; ?></td>
+                                        <td><?= $data['dibuat']; ?></td>
                                         <td style="text-align: center;">
                                             <a href="<?php echo base_url('/hafalan/view/' . $data['id_hafalan']); ?>" style="color: black;">
                                                 <li class="far fa-eye"></li>

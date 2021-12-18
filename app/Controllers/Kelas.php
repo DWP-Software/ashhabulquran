@@ -31,7 +31,7 @@ class Kelas extends Controller
     public function input()
     {
         $data['title'] = 'Tambah kelas';
-        $data['pengajar'] = $this->pengajar->data();
+        $data['pengajar'] = $this->pengajar->data_satu();
         $data['ket'] = ['Input Data Kelas', '<li class="breadcrumb-item active"><a href="/kelas">Data Kelas</a></li>', '<li class="breadcrumb-item active">Input Data Kelas<li>'];
         return view('kelas/input', $data);
     }
@@ -39,12 +39,12 @@ class Kelas extends Controller
     public function add()
     {
         $request = \Config\Services::request();
-        $data = array(
+        $daftar = array(
             'nama_kelas' => $request->getPost('nama'),
             'id_pengajar'   =>  $request->getPost('pengajar'),
             'keterangan_kelas' => $request->getPost('ket'),
         );
-        $this->model->saveKelas($data);
+        $this->model->saveKelas($daftar);
         session()->setFlashdata('pesan_kelas', 'Data Kelas Ditambahkan.');
         return redirect()->to('/kelas/index');
     }
@@ -55,7 +55,7 @@ class Kelas extends Controller
         if (isset($getKelas)) {
             $data['kelas'] = $getKelas;
             $data['title']  = 'Edit Data ';
-            $data['pengajar'] = $this->pengajar->data();
+            $data['pengajar'] = $this->pengajar->data_satu();
             $data['ket'] = ['Edit Data Kelas', '<li class="breadcrumb-item active"><a href="/kelas">Data Kelas</a></li>', '<li class="breadcrumb-item active">Edit Data Kelas<li>'];
             // dd($data['kelas']);
             return view('kelas/edit', $data);
@@ -70,12 +70,12 @@ class Kelas extends Controller
     {
         $request = \Config\Services::request();
         $id_kelas = $request->getPost('id_kelas');
-        $data = array(
+        $daftar = array(
             'nama_kelas' => $request->getPost('nama'),
             'id_pengajar'   =>  $request->getPost('pengajar'),
             'keterangan_kelas' => $request->getPost('ket'),
         );
-        $this->model->editKelas($data, $id_kelas);
+        $this->model->editKelas($daftar, $id_kelas);
 
         session()->setFlashdata('pesan_kelas', 'Data Kelas Berhasi Diedit.');
         return redirect()->to('/kelas');

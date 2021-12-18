@@ -92,6 +92,7 @@
                     <?php endif; ?>
                     <?php if ($santri != NULL and $pengajar != NULL) { ?>
                         <div style="text-align: center;">
+
                             <h5><b>KELAS SANTRI TAHFIZH</b></h5>
                             <h5><b>RUMAH TAHFIZH SHOHIBUL QURAN</b></h5>
                             <h5><b>KELAS SANTRI TAHFIZH</b></h5>
@@ -102,6 +103,7 @@
                             <p>Pembimbing : <?= $pengajar ?></p>
                             <p>Kelas : <?= $k ?></p>
                         </div>
+
                         <table class="table table-bordered">
                             <tr style="text-align: center;">
                                 <th>No.</th>

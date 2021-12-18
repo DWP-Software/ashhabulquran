@@ -10,45 +10,45 @@
     <?php } ?>
     <div class="card">
         <div class="container-fluid card-body">
-            <form method="POST" action="<?php echo base_url('/absens/update'); ?>" enctype="multipart/form-data">
+            <form method="POST" action="<?php echo base_url('/absens/update'); ?>">
                 <?= csrf_field(); ?>
-                <?php if (session()->get('role') == 'Admin') { ?>
-                    <div class="row mb-3">
-                        <label for="id_kelas" class="col-sm-2 col-form-label">Nama Santri</label>
-                        <div class="col-sm-10">
-                            <select class="form-control select2bs4" name="id_kelas" required>
-                                <option value="">Pilih Santri </option>
-                                <?php
-                                foreach ($santri as $p) {
-                                ?>
-                                    <option <?php if ($absen->id_kelas == $p['id_kelas']) {
-                                                echo 'selected';
-                                            } ?> value="<?php echo $p['id_kelas'] ?>"><?php echo $p['nama'] ?> - <?php echo $p['nama_kelas'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                <?php } ?>
-                <div class="row mb-3">
-                    <label for="ket" class="col-sm-2 col-form-label label">Status</label>
-                    <div class="col-sm-10">
-                        <input autocomplete="off" type="radio" name="ket" value="Hadir" <?php if ($absen->keterangan == 'Hadir') {
-                                                                                            echo 'checked';
-                                                                                        } ?>> Hadir
-                        <input autocomplete="off" type="radio" name="ket" value="Alfa" <?php if ($absen->keterangan == 'Alfa') {
-                                                                                            echo 'checked';
-                                                                                        } ?>> Alfa
-                        <input autocomplete="off" type="radio" name="ket" value="Sakit" <?php if ($absen->keterangan == 'Sakit') {
-                                                                                            echo 'checked';
-                                                                                        } ?>> Sakit
-                        <input autocomplete="off" type="radio" name="ket" value="Izin" <?php if ($absen->keterangan == 'Izin') {
-                                                                                            echo 'checked';
-                                                                                        } ?>> Izin
-                    </div>
-                </div>
-                <input type="hidden" name="id_absen" value="<?= $absen->id_absen ?>">
+                <table id="table" class="table table-bordered">
+                    <thead class="" style="text-align: center;">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Santri</th>
+                            <th>keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no = 1;
+                        foreach ($absen as $data) {
+                        ?>
+                            <tr>
+                                <td><?= $no; ?></td>
+                                <td><input type="hidden" name="id_santri[]" value="<?= $data['id_santri']; ?>"><?= $data['nama']; ?></td>
+                                <td>
+                                    <input <?php if ($data['keterangan'] == 'hadir') {
+                                                echo 'checked';
+                                            } ?> autocomplete="off" type="radio" name="ket<?= $data['id_santri']; ?>" value="Hadir"> Hadir
+                                    <input <?php if ($data['keterangan'] == 'alfa') {
+                                                echo 'checked';
+                                            } ?> autocomplete="off" type="radio" name="ket<?= $data['id_santri']; ?>" value="Alfa"> Alfa
+                                    <input <?php if ($data['keterangan'] == 'sakit') {
+                                                echo 'checked';
+                                            } ?> autocomplete="off" type="radio" name="ket<?= $data['id_santri']; ?>" value="Sakit"> Sakit
+                                    <input <?php if ($data['keterangan'] == 'izin') {
+                                                echo 'checked';
+                                            } ?> autocomplete="off" type="radio" name="ket<?= $data['id_santri']; ?>" value="Izin"> Izin
+                                </td>
+                            </tr>
+                            <input type="hidden" name="id_absen[]" value="<?= $data['id_absen']; ?>">
+                            <input type="hidden" name="id_san[]" value="<?= $data['id_santri']; ?>">
+                        <?php $no++;
+                        } ?>
+                    </tbody>
+                </table>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-danger">Reset</button>
             </form>
         </div>
         <!-- /.row -->

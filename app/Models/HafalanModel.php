@@ -14,12 +14,14 @@ class HafalanModel extends Model
             return $this->db->table('hafalan')
                 ->join('santri', 'santri.id_santri = hafalan.id_santri')
                 ->join('surah', 'surah.id_surah = hafalan.id_surah')
+                ->orderBy('id_hafalan', 'DESC')
                 ->get()->getResultArray();
         } elseif ($id_hafalan === false and $id_user != false and $id_pengajar === false) {
             return $this->db->table('hafalan')
                 ->join('santri', 'santri.id_santri = hafalan.id_santri')
                 ->join('surah', 'surah.id_surah = hafalan.id_surah')
                 ->where('hafalan.id_santri', $id_user)
+                ->orderBy('id_hafalan', 'DESC')
                 ->get()->getResultArray();
         } elseif ($id_hafalan === false and $id_user === false and $id_pengajar != false) {
             return $this->db->table('hafalan')
@@ -28,6 +30,7 @@ class HafalanModel extends Model
                 ->join('kelas', 'kelas.id_kelas = kelassantri.id_kelas')
                 ->join('surah', 'surah.id_surah = hafalan.id_surah')
                 ->where('id_pengajar', $id_pengajar)
+                ->orderBy('id_hafalan', 'DESC')
                 ->get()->getResultArray();
         } else {
             return $this->db->table('hafalan')

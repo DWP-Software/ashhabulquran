@@ -39,7 +39,7 @@ class User extends Controller
             'username' => $request->getPost('username'),
             'password' => password_hash($request->getPost('pass'), PASSWORD_BCRYPT),
             'telp' => $request->getPost('telp'),
-            'role' => 'Pemilik'
+            'role' => $request->getPost('role')
         );
         $this->model->saveUser($data);
         session()->setFlashdata('pesan_user', 'Data user berhasi ditambahkan.');

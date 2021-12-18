@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 15, 2021 at 02:55 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 7.4.20
+-- Host: 127.0.0.1:3306
+-- Generation Time: Dec 15, 2021 at 12:26 AM
+-- Server version: 5.7.31
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,31 +27,25 @@ SET time_zone = "+00:00";
 -- Table structure for table `absenpengajar`
 --
 
-CREATE TABLE `absenpengajar` (
-  `id_absen` int(11) NOT NULL,
+DROP TABLE IF EXISTS `absenpengajar`;
+CREATE TABLE IF NOT EXISTS `absenpengajar` (
+  `id_absen` int(11) NOT NULL AUTO_INCREMENT,
   `id_pengajar` int(11) NOT NULL,
   `id_kelas` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `keterangan` enum('hadir','alfa','sakit','izin') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `tanggal` date NOT NULL,
+  `keterangan` enum('hadir','alfa','sakit','izin') NOT NULL,
+  `foto` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_absen`),
+  KEY `absen` (`id_pengajar`),
+  KEY `kelas` (`id_kelas`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `absenpengajar`
 --
 
-INSERT INTO `absenpengajar` (`id_absen`, `id_pengajar`, `id_kelas`, `tanggal`, `keterangan`) VALUES
-(1, 14, 6, '2021-10-14 00:10:55', 'sakit'),
-(3, 25, 18, '2021-10-03 21:10:05', 'izin'),
-(4, 18, 17, '2021-10-12 00:10:21', 'hadir'),
-(5, 17, 10, '2021-10-14 00:10:30', 'hadir'),
-(6, 31, 23, '2021-10-14 23:10:40', 'hadir'),
-(7, 31, 24, '2021-10-14 23:10:56', 'hadir'),
-(8, 31, 23, '2021-10-14 23:10:46', 'sakit'),
-(9, 31, 24, '2021-10-14 23:10:17', 'sakit'),
-(10, 31, 24, '2021-10-14 23:10:39', 'hadir'),
-(11, 31, 24, '2021-10-14 23:10:54', 'izin'),
-(12, 20, 11, '2021-10-14 23:10:05', 'hadir'),
-(13, 31, 23, '2021-10-14 23:10:21', 'sakit');
+INSERT INTO `absenpengajar` (`id_absen`, `id_pengajar`, `id_kelas`, `tanggal`, `keterangan`, `foto`) VALUES
+(38, 25, 18, '2021-12-12', 'izin', '1639367223_ca5ef217e4893fbfd0b8.jpg');
 
 -- --------------------------------------------------------
 
@@ -59,40 +53,25 @@ INSERT INTO `absenpengajar` (`id_absen`, `id_pengajar`, `id_kelas`, `tanggal`, `
 -- Table structure for table `absensantri`
 --
 
-CREATE TABLE `absensantri` (
-  `id_absen` int(11) NOT NULL,
+DROP TABLE IF EXISTS `absensantri`;
+CREATE TABLE IF NOT EXISTS `absensantri` (
+  `id_absen` int(11) NOT NULL AUTO_INCREMENT,
   `id_santri` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `keterangan` enum('hadir','alfa','sakit','izin') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `tanggal` date NOT NULL,
+  `keterangan` enum('hadir','alfa','sakit','izin') NOT NULL,
+  PRIMARY KEY (`id_absen`),
+  KEY `absens` (`id_santri`)
+) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `absensantri`
 --
 
 INSERT INTO `absensantri` (`id_absen`, `id_santri`, `tanggal`, `keterangan`) VALUES
-(1, 44, '2021-10-06 07:46:11', 'hadir'),
-(2, 45, '2021-10-06 07:46:11', 'izin'),
-(3, 46, '2021-10-06 07:46:11', 'alfa'),
-(4, 47, '2021-10-06 07:46:11', 'sakit'),
-(5, 47, '2021-10-05 20:10:40', 'sakit'),
-(6, 46, '2021-10-05 20:10:40', 'hadir'),
-(7, 45, '2021-10-05 20:10:40', 'alfa'),
-(8, 44, '2021-10-05 20:10:40', 'izin'),
-(9, 48, '2021-10-05 20:10:23', 'hadir'),
-(10, 48, '2021-10-12 20:10:03', 'alfa'),
-(11, 47, '2021-10-15 00:10:25', 'hadir'),
-(12, 46, '2021-10-15 00:10:25', 'alfa'),
-(13, 45, '2021-10-15 00:10:25', 'sakit'),
-(14, 44, '2021-10-15 00:10:26', 'hadir'),
-(15, 47, '2021-10-15 00:19:08', 'hadir'),
-(16, 46, '2021-10-15 00:19:08', 'alfa'),
-(17, 45, '2021-10-15 00:19:08', 'izin'),
-(18, 44, '2021-10-15 00:19:08', 'hadir'),
-(19, 47, '2021-10-15 00:20:08', 'hadir'),
-(20, 46, '2021-10-15 00:20:08', 'alfa'),
-(21, 45, '2021-10-15 00:20:08', 'sakit'),
-(22, 44, '2021-10-15 00:20:08', 'hadir');
+(204, 47, '2021-12-10', 'hadir'),
+(205, 46, '2021-12-10', 'hadir'),
+(206, 45, '2021-12-10', 'hadir'),
+(207, 44, '2021-12-10', 'hadir');
 
 -- --------------------------------------------------------
 
@@ -100,12 +79,14 @@ INSERT INTO `absensantri` (`id_absen`, `id_santri`, `tanggal`, `keterangan`) VAL
 -- Table structure for table `galeri`
 --
 
-CREATE TABLE `galeri` (
-  `id_galeri` int(11) NOT NULL,
+DROP TABLE IF EXISTS `galeri`;
+CREATE TABLE IF NOT EXISTS `galeri` (
+  `id_galeri` int(11) NOT NULL AUTO_INCREMENT,
   `nama_kegiatan` text NOT NULL,
   `tgl` date NOT NULL,
-  `foto` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `foto` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_galeri`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `galeri`
@@ -113,9 +94,8 @@ CREATE TABLE `galeri` (
 
 INSERT INTO `galeri` (`id_galeri`, `nama_kegiatan`, `tgl`, `foto`) VALUES
 (1, 'Pembuatan sistem informasi rumah tahfidz 2021', '2021-08-30', '1633248369_36ad8d4b964a3a507926.jpg'),
-(3, 'pemberian buku', '2021-06-05', '1633248278_2163061e33e8028bc96c.jpg'),
-(4, '<p>Foto Bersama dengan Politeknik Negeri Padang</p>', '2021-08-08', '1634295314_966c8bac6fa09440ab58.jpg'),
-(5, '<p>hei alah</p>', '2021-09-03', '1634295696_0817edacaf389e4d192a.jpg');
+(3, 'Pemberian buku ke rumah tahfidz', '2021-06-05', '1633248278_2163061e33e8028bc96c.jpg'),
+(4, '<p>Foto Bersama dengan Politeknik Negeri Padang</p>', '2021-08-08', '1634295314_966c8bac6fa09440ab58.jpg');
 
 -- --------------------------------------------------------
 
@@ -123,33 +103,21 @@ INSERT INTO `galeri` (`id_galeri`, `nama_kegiatan`, `tgl`, `foto`) VALUES
 -- Table structure for table `hafalan`
 --
 
-CREATE TABLE `hafalan` (
-  `id_hafalan` int(11) NOT NULL,
+DROP TABLE IF EXISTS `hafalan`;
+CREATE TABLE IF NOT EXISTS `hafalan` (
+  `id_hafalan` int(11) NOT NULL AUTO_INCREMENT,
   `id_santri` int(11) NOT NULL,
   `tgl_setor` date NOT NULL,
   `id_surah` int(11) NOT NULL,
   `awal_hafalan` int(11) NOT NULL,
   `akhir_hafalan` int(11) NOT NULL,
-  `keterangan` text DEFAULT NULL,
-  `status` enum('Selesai','Belum Selesai') NOT NULL DEFAULT 'Belum Selesai'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `hafalan`
---
-
-INSERT INTO `hafalan` (`id_hafalan`, `id_santri`, `tgl_setor`, `id_surah`, `awal_hafalan`, `akhir_hafalan`, `keterangan`, `status`) VALUES
-(2, 45, '2021-10-05', 2, 1, 20, NULL, 'Belum Selesai'),
-(3, 45, '2021-10-06', 2, 21, 56, NULL, 'Belum Selesai'),
-(5, 44, '2021-10-09', 2, 1, 40, NULL, 'Belum Selesai'),
-(6, 44, '2021-10-09', 2, 41, 141, 'excellent', 'Selesai'),
-(7, 45, '2021-10-10', 2, 21, 30, '', 'Belum Selesai'),
-(8, 46, '2021-10-10', 2, 1, 60, '', 'Belum Selesai'),
-(9, 46, '2021-10-10', 2, 61, 100, '', 'Belum Selesai'),
-(10, 46, '2021-10-13', 5, 1, 50, '', 'Belum Selesai'),
-(11, 68, '2021-10-13', 2, 1, 30, '', 'Belum Selesai'),
-(12, 45, '2021-10-13', 5, 1, 40, '', 'Belum Selesai'),
-(13, 54, '2021-10-14', 2, 1, 60, '', 'Belum Selesai');
+  `keterangan` text,
+  `status` enum('Selesai','Belum Selesai') NOT NULL DEFAULT 'Belum Selesai',
+  `dibuat` varchar(10) NOT NULL,
+  PRIMARY KEY (`id_hafalan`),
+  KEY `santrihaf` (`id_santri`),
+  KEY `surahhaf` (`id_surah`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -157,12 +125,15 @@ INSERT INTO `hafalan` (`id_hafalan`, `id_santri`, `tgl_setor`, `id_surah`, `awal
 -- Table structure for table `kelas`
 --
 
-CREATE TABLE `kelas` (
-  `id_kelas` int(11) NOT NULL,
+DROP TABLE IF EXISTS `kelas`;
+CREATE TABLE IF NOT EXISTS `kelas` (
+  `id_kelas` int(11) NOT NULL AUTO_INCREMENT,
   `nama_kelas` varchar(100) NOT NULL,
   `id_pengajar` int(11) NOT NULL,
-  `keterangan_kelas` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `keterangan_kelas` text NOT NULL,
+  PRIMARY KEY (`id_kelas`),
+  KEY `pengajar_kelas` (`id_pengajar`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kelas`
@@ -171,20 +142,17 @@ CREATE TABLE `kelas` (
 INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `id_pengajar`, `keterangan_kelas`) VALUES
 (6, 'Athfal level 1', 14, '<p>Usia 6 - 7 Tahun<br></p>'),
 (7, 'TAUD', 14, '<p>Balita usia 3 - 5 tahun<br></p>'),
-(9, 'Banat', 25, '<p>Usia 8 - 18 tahun </p><p>Perempuan<br></p>'),
+(9, 'Banat', 18, '<p>Usia 8 - 18 tahun </p><p>Perempuan<br></p>'),
 (10, 'Banat', 17, '<p>Usia 8 - 18 tahun</p><p>Perempuan<br></p>'),
 (11, 'Banat', 20, '<p>Usia 8 - 18 tahun Perempuan</p>'),
-(12, 'Banat', 18, '<p>Usia 8 - 18 tahun</p>Perempuan'),
+(12, 'Banat', 17, '<p>Usia 8 - 18 tahun</p>Perempuan'),
 (13, 'Banat', 21, '<p>Usia 8 - 18 tahun</p>Perempuan'),
 (14, 'Aulad', 24, '<p>Usia 8 - 18 tahun</p>Laki - Laki<br>'),
 (15, 'Aulad', 19, '<p>Usia 8 - 18 tahun</p>Laki - Laki<br>'),
 (16, 'Aulad', 23, '<p>Usia 8 - 18 tahun</p>Laki - Laki'),
 (17, 'TQM', 18, '<p>1. Santri minimal hafal 1 juz</p><p>2. tidak menjadi santri di TPA / MDA</p><p>3. Santri menghafal juz 29 keatas<br></p>'),
 (18, 'TQM', 25, '<p>1. Santri minimal hafal 1 juz</p><p>2. tidak menjadi santri di TPA / MDA</p><p>3. Santri menghafal juz 29 keatas<br></p>'),
-(22, 'Balita Level2', 14, '<p>-<br></p>'),
-(23, 'banad 3', 31, '<p>-</p>'),
-(24, 'TQM levelmax', 31, '<p>-</p>'),
-(25, 'tre', 31, '<p>5</p>');
+(22, 'Balita Level2', 14, '<p>-<br></p>');
 
 -- --------------------------------------------------------
 
@@ -192,11 +160,15 @@ INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `id_pengajar`, `keterangan_kelas`
 -- Table structure for table `kelassantri`
 --
 
-CREATE TABLE `kelassantri` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `kelassantri`;
+CREATE TABLE IF NOT EXISTS `kelassantri` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_kelas` int(11) NOT NULL,
-  `id_santri` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_santri` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idkelas` (`id_kelas`),
+  KEY `idsantri` (`id_santri`)
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kelassantri`
@@ -207,7 +179,6 @@ INSERT INTO `kelassantri` (`id`, `id_kelas`, `id_santri`) VALUES
 (39, 17, 45),
 (40, 17, 46),
 (41, 17, 47),
-(42, 12, 48),
 (43, 14, 49),
 (44, 14, 50),
 (45, 14, 51),
@@ -237,8 +208,7 @@ INSERT INTO `kelassantri` (`id`, `id_kelas`, `id_santri`) VALUES
 (69, 11, 75),
 (70, 11, 76),
 (71, 11, 77),
-(72, 11, 78),
-(78, 7, 84);
+(72, 11, 78);
 
 -- --------------------------------------------------------
 
@@ -246,22 +216,24 @@ INSERT INTO `kelassantri` (`id`, `id_kelas`, `id_santri`) VALUES
 -- Table structure for table `pengajar`
 --
 
-CREATE TABLE `pengajar` (
-  `id_pengajar` int(11) NOT NULL,
+DROP TABLE IF EXISTS `pengajar`;
+CREATE TABLE IF NOT EXISTS `pengajar` (
+  `id_pengajar` int(11) NOT NULL AUTO_INCREMENT,
   `no_pengajar` varchar(20) DEFAULT NULL,
   `nama` varchar(100) NOT NULL,
   `tempat_lahir` varchar(100) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `jk` varchar(12) NOT NULL,
   `pendidikan_terakhir` varchar(100) DEFAULT NULL,
-  `alamat` text DEFAULT NULL,
+  `alamat` text,
   `jml_hafalan` varchar(10) DEFAULT NULL,
   `thn_masuk` varchar(4) DEFAULT NULL,
   `nohp` varchar(13) DEFAULT NULL,
   `foto` varchar(100) DEFAULT NULL,
   `keterangan` varchar(15) NOT NULL,
-  `status` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_pengajar`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pengajar`
@@ -269,16 +241,15 @@ CREATE TABLE `pengajar` (
 
 INSERT INTO `pengajar` (`id_pengajar`, `no_pengajar`, `nama`, `tempat_lahir`, `tgl_lahir`, `jk`, `pendidikan_terakhir`, `alamat`, `jml_hafalan`, `thn_masuk`, `nohp`, `foto`, `keterangan`, `status`) VALUES
 (14, 'P20130014', 'Hafsah Elvi Ramadhani', 'Bukittinggi', '1987-05-02', 'Perempuan', 'D3 keperawatan', 'Koto Tinggi, Pandai Sikek Kec. X Koto, Kab. Tanah Datar', '30', '2013', '086789890990', 'default.jpg', 'Active', 'Sertifikasi Tabarak Internasional 2018'),
-(17, 'P20170017', 'Rima Sasmita', 'Padang', '1983-10-05', 'Perempuan', NULL, NULL, NULL, '2017', '1234567890', 'default.jpg', 'Active', NULL),
+(17, 'P20170017', 'Rima Sasmita', 'Padang', '1983-10-05', 'Perempuan', 'S1', 'pandai sikek', '1', '2017', '1234567890', 'default.jpg', 'Passive', '-'),
 (18, 'P20170018', 'Wira Anggraini', 'Koto Baru', '1991-05-16', 'Perempuan', NULL, NULL, NULL, '2017', '1234567890', 'default.jpg', 'Active', NULL),
 (19, 'P20180019', 'Dimas Albukhari R. Muslim', 'Padang Panjang', '2000-11-30', 'Laki - Laki', NULL, NULL, NULL, '2018', '1234567890', 'default.jpg', 'Active', NULL),
-(20, 'P20180020', 'Dina Hanifah Apandi', 'Bandung', '2001-03-11', 'Perempuan', NULL, NULL, NULL, '2018', '1234567890', 'default.jpg', 'Active', NULL),
+(20, 'P20180020', 'Dina Hanifah Apandi', 'Bandung', '2001-03-11', 'Perempuan', 'S1', 'pandai sikek', '1', '2018', '1234567890', 'default.jpg', 'Passive', '-'),
 (21, 'P20190021', 'Lidya Oktaviani', 'Koto Baru', '1998-10-13', 'Perempuan', NULL, NULL, NULL, '2019', '1234567890', 'default.jpg', 'Active', NULL),
 (23, 'P20200023', 'Hamzah', 'Sukoharjo', '1994-07-25', 'Laki - Laki', NULL, NULL, NULL, '2020', '1234567890', 'default.jpg', 'Active', NULL),
-(24, 'P20200024', 'Harif Pratama', 'Padang Panjang', '1996-03-19', 'Laki - Laki', '-', '-', '0', '2020', '082678988970', 'default.jpg', 'Active', '-'),
+(24, 'P20200024', 'Harif Pratama', 'Padang Panjang', '1996-03-19', 'Laki - Laki', '-', '-', '0', '2020', '082678988970', 'default.jpg', 'Passive', '-'),
 (25, 'P20160025', 'Ainun Mardiyah', 'Medan', '1985-04-12', 'Perempuan', 'Ma\'had Tahfidz', 'Koto tinggi pandai sikek kec. X Koto Kab. Tanah Datar', '30', '2016', '089090890989', 'default.jpg', 'Active', '-'),
-(29, 'P20190029', 'Safari Yati', 'Bukittinggi', '1998-10-13', 'Perempuan', 'SLTA', ' Koto Tinggi Pandai Sikek Kec. X Koto, Kab Tanah Datar', '3', '2019', '0989898298392', 'default.jpg', 'Active', '-'),
-(31, 'P20210031', 'Irfan heihei', 'Padang', '2000-11-10', 'Laki - Laki', 'Slta', ' Gadut', '5', '2021', '1231412525123', 'default.jpg', 'Active', '-');
+(29, 'P20190029', 'Safari Yati', 'Bukittinggi', '1998-10-13', 'Perempuan', 'SLTA', ' Koto Tinggi Pandai Sikek Kec. X Koto, Kab Tanah Datar', '3', '2019', '0989898298392', 'default.jpg', 'Active', '-');
 
 -- --------------------------------------------------------
 
@@ -286,7 +257,8 @@ INSERT INTO `pengajar` (`id_pengajar`, `no_pengajar`, `nama`, `tempat_lahir`, `t
 -- Table structure for table `rumahtahfidz`
 --
 
-CREATE TABLE `rumahtahfidz` (
+DROP TABLE IF EXISTS `rumahtahfidz`;
+CREATE TABLE IF NOT EXISTS `rumahtahfidz` (
   `id_rumahtahfidz` int(11) NOT NULL,
   `namart` varchar(100) NOT NULL,
   `pemilik` varchar(100) NOT NULL,
@@ -295,7 +267,8 @@ CREATE TABLE `rumahtahfidz` (
   `telp1` varchar(15) NOT NULL,
   `telp2` varchar(15) NOT NULL,
   `maps` text NOT NULL,
-  `foto` varchar(100) NOT NULL
+  `foto` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_rumahtahfidz`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -311,15 +284,16 @@ INSERT INTO `rumahtahfidz` (`id_rumahtahfidz`, `namart`, `pemilik`, `alamat`, `e
 -- Table structure for table `santri`
 --
 
-CREATE TABLE `santri` (
-  `id_santri` int(11) NOT NULL,
+DROP TABLE IF EXISTS `santri`;
+CREATE TABLE IF NOT EXISTS `santri` (
+  `id_santri` int(11) NOT NULL AUTO_INCREMENT,
   `no_santri` varchar(20) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `tempat_lahir` varchar(100) DEFAULT NULL,
   `tgl_lahir` date DEFAULT NULL,
   `jk` varchar(15) NOT NULL,
   `pendidikan` varchar(100) DEFAULT NULL,
-  `alamat` text DEFAULT NULL,
+  `alamat` text,
   `nohp` varchar(15) DEFAULT NULL,
   `jml_hafalan` int(11) DEFAULT NULL,
   `tgl_masuk` date DEFAULT NULL,
@@ -328,8 +302,9 @@ CREATE TABLE `santri` (
   `nama_ibu` varchar(100) DEFAULT NULL,
   `pekerjaan_ibu` varchar(100) DEFAULT NULL,
   `nohp_ortu` varchar(15) DEFAULT NULL,
-  `foto` varchar(100) DEFAULT 'default.jpg'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `foto` varchar(100) DEFAULT 'default.jpg',
+  PRIMARY KEY (`id_santri`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `santri`
@@ -340,7 +315,6 @@ INSERT INTO `santri` (`id_santri`, `no_santri`, `nama`, `tempat_lahir`, `tgl_lah
 (45, 'S210045', 'Qisti Khairatun Hisan', NULL, NULL, 'Perempuan', NULL, NULL, '085364200310', NULL, '2021-10-05', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (46, 'S210046', 'Salma Hidayati', NULL, NULL, 'Perempuan', NULL, NULL, '081261877921', NULL, '2021-10-06', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (47, 'S210047', 'Nadira Tazkia', NULL, NULL, 'Perempuan', NULL, NULL, '081363121518', NULL, '2021-10-07', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
-(48, 'S210048', 'ghin', NULL, NULL, 'Perempuan', NULL, NULL, '085356085641', NULL, '2021-10-05', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (49, 'S210049', 'Stievano Al-Fatih', NULL, NULL, 'Laki - Laki', NULL, NULL, '085263330354', NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (50, 'S210050', 'Tegar', NULL, NULL, 'Laki - Laki', NULL, NULL, '082386824749', NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (51, 'S210051', 'Jundi Syarif Deslim', NULL, NULL, 'Laki - Laki', NULL, NULL, '085835285048', NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
@@ -370,8 +344,7 @@ INSERT INTO `santri` (`id_santri`, `no_santri`, `nama`, `tempat_lahir`, `tgl_lah
 (75, 'S210075', 'Zahra Melika', NULL, NULL, 'Perempuan', NULL, NULL, NULL, NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (76, 'S210076', 'Vanesa Reva Violin', NULL, NULL, 'Perempuan', NULL, NULL, NULL, NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (77, 'S210077', 'Chesya Bunga Rasika', NULL, NULL, 'Perempuan', NULL, NULL, NULL, NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
-(78, 'S210078', 'Kanaya', 'pandai sikek', '2012-09-05', 'Perempuan', 'sd', 'pandai sikek x koto', '098888888888888', 1, '2021-10-08', 'aki', 'guru', 'sari', 'IRT', '090900900909009', 'default.jpg'),
-(84, 'S000084', 'acascasafsayang', 'fwefegew', '2000-12-03', 'Laki - Laki', 'svsdgsgsg', 'Komp unand ulu gadut D IV 15/05', '1212412412424', 4, '2000-11-10', 'fwefergeg', 'rbbrtbrbrt', 'rtbrtbrbrv', 'rgbrtbrybrt', '234234242342', 'default.jpg');
+(78, 'S210078', 'Kanaya', 'pandai sikek', '2012-09-05', 'Perempuan', 'sd', 'pandai sikek x koto', '098888888888888', 1, '2021-10-08', 'aki', 'guru', 'sari', 'IRT', '090900900909009', 'default.jpg');
 
 -- --------------------------------------------------------
 
@@ -379,14 +352,16 @@ INSERT INTO `santri` (`id_santri`, `no_santri`, `nama`, `tempat_lahir`, `tgl_lah
 -- Table structure for table `surah`
 --
 
-CREATE TABLE `surah` (
-  `id_surah` int(11) NOT NULL,
+DROP TABLE IF EXISTS `surah`;
+CREATE TABLE IF NOT EXISTS `surah` (
+  `id_surah` int(11) NOT NULL AUTO_INCREMENT,
   `nama_surah` varchar(100) NOT NULL,
   `juz` varchar(3) NOT NULL,
   `jumlah_ayat` int(11) NOT NULL,
   `awal` int(11) NOT NULL,
-  `akhir` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `akhir` int(11) NOT NULL,
+  PRIMARY KEY (`id_surah`)
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `surah`
@@ -526,14 +501,16 @@ INSERT INTO `surah` (`id_surah`, `nama_surah`, `juz`, `jumlah_ayat`, `awal`, `ak
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `id_data` int(11) DEFAULT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `telp` varchar(20) DEFAULT NULL,
-  `role` enum('Admin','Pengajar','Santri','Pemilik') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `role` enum('Admin','Pengajar','Santri','Pemilik') NOT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -548,7 +525,7 @@ INSERT INTO `user` (`id_user`, `id_data`, `username`, `password`, `telp`, `role`
 (16, 20, 'P20180020', '$2y$10$tEPS5tJYWt3DX.rX3LWMTO6vB73kbi.yG8NnFBO/CyZt.bHXtQpcW', '1234567890', 'Pengajar'),
 (17, 21, 'P20190021', '$2y$10$d4GHLz9EXPtruj6SPre.COfqixhz6YQLbgn7KAkKXgfI//cFhsMwC', '1234567890', 'Pengajar'),
 (19, 23, 'P20200023', '$2y$10$HPmlyyER6jt2K2ZrQuzVy.tK2OqdCcbTrjG4hh7Ebm2wYEu7L8de2', '1234567890', 'Pengajar'),
-(20, 24, 'P20200024', '$2y$10$AigX0QeGlmrakKYxXPK2QeCW5Fn4yZ2NymAfQnS.NvDE2s28LIK5.', '082678988970', 'Pengajar'),
+(20, 24, 'P20200024', '$2y$10$vAh5GykUGUvIUF.trzmDkeHWcF2M1R7uUi4a3snJ11eGvWG1NikLC', '082678988970', 'Pengajar'),
 (26, 25, 'P20160025', '$2y$10$WVz2bniY8RowuOGCAZCkDe8EExLz0BUom8zDvYCSUEPb8Ghc4x6Yu', '089090890989', 'Pengajar'),
 (27, 44, 'S210044', '$2y$10$NthmXRtuJozpfmZevYJZMuWQnsfPf3ZDKpYd4VDNsgb542dGWM3My', '085356085641', 'Santri'),
 (28, 45, 'S210045', '$2y$10$DqCLX4qWKx5j61FmWcCB.OTC9yFvw9Rb8qQ5aYs9q2.05MLqzMG.y', '085364200310', 'Santri'),
@@ -585,162 +562,10 @@ INSERT INTO `user` (`id_user`, `id_data`, `username`, `password`, `telp`, `role`
 (62, 76, 'S210076', '$2y$10$1qXHb88cWzfX2mc1G2uB3.M3.ASAsg.l2T4SIEPHMiDZ4XCemrnM6', NULL, 'Santri'),
 (63, 77, 'S210077', '$2y$10$TnMKxoSXoU1kr2yPZftERO3wl.dKjoQQ3PbtXiRU8vSSKaF2LAV4e', NULL, 'Santri'),
 (64, 78, 'S210078', '$2y$10$6bt12AGz65oS.5nH8FB21u0VUa9u.8.opxC.darvo8HX6G0y9DAbO', '098888888888888', 'Santri'),
-(68, 26, 'P20210026', '$2y$10$UqrdC6yyjGsLJ7V9GDvIoOT05B/e.stzXWfEJyGjcrVNdWblDwaiG', '0980393893893889', 'Pengajar'),
-(69, 27, 'P20210027', '$2y$10$lZEwopIoFq0ejpDR9F33q.PdnYqy.MWcnj9ZbsncEJRq00CQU8Ikq', '081374578858', 'Pengajar'),
-(70, 28, 'P20210028', '$2y$10$iO9eRlDwX5UA58tH2G3nuuAyHRVKtnOvYBZVFakaRAmEJPfbHU01u', '09102932193093029', 'Pengajar'),
 (71, 29, 'P20190029', '$2y$10$7B0HFXOLEH.Yo6b/JaWhPexM0OzEH4N7dzYqslVhm8frQQe1RirXa', '0989898298392389', 'Pengajar'),
-(72, 30, 'P20210030', '$2y$10$REHczF4TU0oi310mqV/ppe7XL/v3aRVHsWJKfKEwIigZC7l8iP8im', '0898988899898', 'Pengajar'),
-(73, 82, 'S180082', '$2y$10$B74MZL5hwr7I.uxfgo2KCej96EaDnEbszRn/S2rc3DHTMYJ8MdfO.', '083181853597', 'Santri'),
-(74, 31, 'P20210031', '$2y$10$av6EsARz2aC7QiQXjKtW.uCJZqAaVekrQryl9VcEXToFHe4RjbQoW', '1231412525123', 'Pengajar'),
-(75, 32, 'P20210032', '$2y$10$XGjGGFw2LejVMJUF6hObDeqJ7X20CQUI7W2vht6lS1dNfZ9tWHl4i', '41241532523523', 'Pengajar'),
-(76, 33, 'P20210033', '$2y$10$eALnTg.VUTfIK9o1NAq4d.CICsZxvlF82Pw94MsV6hhtaS.zr5hly', '21412412525236', 'Pengajar'),
-(77, 83, 'S000083', '$2y$10$kedd.Px5hCkEpk4RdXDsw.Pfl6J9dDLuSZpFE8cfvJlQT2qMUU3rK', '2134242424234', 'Santri'),
-(78, 84, 'S000084', '$2y$10$Nz4S/Civ1dv8Sw2G0QP8w..HWW4jvF4YIOBBJg8Nr1OoSmFgdx4mW', '1212412412424', 'Santri'),
-(79, 85, 'S000085', '$2y$10$XjDD.ZJcqI7u3dJeRCHPc.WNByODdABn43DCBxSIetcD2FRdZHMkS', '1241242152315215', 'Santri'),
-(80, 34, 'P20210034', '$2y$10$.fsJPgFS6rBMi1u4ZBBMEOUsfOOeNvQxXYTyTqemNOMn9LS/aoMI6', '099887728737', 'Pengajar'),
-(81, 86, 'S010086', '$2y$10$2pSoQu/73qr2NJ6Udz2Zn.3IcZvTzU3VYYgV06VPEw7F9bYyiKejS', '098491388491889', 'Santri');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `absenpengajar`
---
-ALTER TABLE `absenpengajar`
-  ADD PRIMARY KEY (`id_absen`),
-  ADD KEY `absen` (`id_pengajar`),
-  ADD KEY `kelas` (`id_kelas`);
-
---
--- Indexes for table `absensantri`
---
-ALTER TABLE `absensantri`
-  ADD PRIMARY KEY (`id_absen`),
-  ADD KEY `absens` (`id_santri`);
-
---
--- Indexes for table `galeri`
---
-ALTER TABLE `galeri`
-  ADD PRIMARY KEY (`id_galeri`);
-
---
--- Indexes for table `hafalan`
---
-ALTER TABLE `hafalan`
-  ADD PRIMARY KEY (`id_hafalan`),
-  ADD KEY `santrihaf` (`id_santri`),
-  ADD KEY `surahhaf` (`id_surah`);
-
---
--- Indexes for table `kelas`
---
-ALTER TABLE `kelas`
-  ADD PRIMARY KEY (`id_kelas`),
-  ADD KEY `pengajar_kelas` (`id_pengajar`);
-
---
--- Indexes for table `kelassantri`
---
-ALTER TABLE `kelassantri`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idkelas` (`id_kelas`),
-  ADD KEY `idsantri` (`id_santri`);
-
---
--- Indexes for table `pengajar`
---
-ALTER TABLE `pengajar`
-  ADD PRIMARY KEY (`id_pengajar`);
-
---
--- Indexes for table `rumahtahfidz`
---
-ALTER TABLE `rumahtahfidz`
-  ADD PRIMARY KEY (`id_rumahtahfidz`);
-
---
--- Indexes for table `santri`
---
-ALTER TABLE `santri`
-  ADD PRIMARY KEY (`id_santri`);
-
---
--- Indexes for table `surah`
---
-ALTER TABLE `surah`
-  ADD PRIMARY KEY (`id_surah`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `absenpengajar`
---
-ALTER TABLE `absenpengajar`
-  MODIFY `id_absen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `absensantri`
---
-ALTER TABLE `absensantri`
-  MODIFY `id_absen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
-
---
--- AUTO_INCREMENT for table `galeri`
---
-ALTER TABLE `galeri`
-  MODIFY `id_galeri` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `hafalan`
---
-ALTER TABLE `hafalan`
-  MODIFY `id_hafalan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `kelas`
---
-ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT for table `kelassantri`
---
-ALTER TABLE `kelassantri`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
-
---
--- AUTO_INCREMENT for table `pengajar`
---
-ALTER TABLE `pengajar`
-  MODIFY `id_pengajar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
--- AUTO_INCREMENT for table `santri`
---
-ALTER TABLE `santri`
-  MODIFY `id_santri` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
-
---
--- AUTO_INCREMENT for table `surah`
---
-ALTER TABLE `surah`
-  MODIFY `id_surah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+(84, NULL, 'admin1', '$2y$10$olOX0HJ6rXmeK31V/lECv.a.wFhBH0GHy0Z1QHRvVue2eRZGzzhzm', '0897987987878', 'Admin'),
+(85, NULL, 'owner', '$2y$10$Rk/J.JGFJdkZJPgdUhxok.zRB/laIWqo1WVrvMsiecVsiYjy00kmS', '082290909090', 'Pemilik'),
+(89, NULL, 'adminrtsq', '$2y$10$rqx0xhsEqOIRxFYLzBwwIubuucZJR8Av92AHVatSsqPhHu29YSoxm', '087898678998', 'Admin');
 
 --
 -- Constraints for dumped tables

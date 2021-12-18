@@ -23,7 +23,7 @@
                                 ?>
                                     <option <?php if ($absen->id_kelas == $p['id_kelas']) {
                                                 echo 'selected';
-                                            } ?> value="<?php echo $p['id_kelas'] ?>"><?php echo $p['nama'] ?> - <?php echo $p['nama_kelas'] ?></option>
+                                            } ?> value="<?= $p['id_kelas'] ?>"><?php echo $p['nama'] ?> - <?php echo $p['nama_kelas'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -32,23 +32,36 @@
                 <div class="row mb-3">
                     <label for="ket" class="col-sm-2 col-form-label label">Status</label>
                     <div class="col-sm-10">
-                        <input autocomplete="off" type="radio" name="ket" value="Hadir" <?php if ($absen->keterangan == 'Hadir') {
+                        <input autocomplete="off" type="radio" name="ket" value="Hadir" <?php if ($absen->keterangan == 'hadir') {
                                                                                             echo 'checked';
                                                                                         } ?>> Hadir
-                        <input autocomplete="off" type="radio" name="ket" value="Alfa" <?php if ($absen->keterangan == 'Alfa') {
+                        <input autocomplete="off" type="radio" name="ket" value="Alfa" <?php if ($absen->keterangan == 'alfa') {
                                                                                             echo 'checked';
                                                                                         } ?>> Alfa
-                        <input autocomplete="off" type="radio" name="ket" value="Sakit" <?php if ($absen->keterangan == 'Sakit') {
+                        <input autocomplete="off" type="radio" name="ket" value="Sakit" <?php if ($absen->keterangan == 'sakit') {
                                                                                             echo 'checked';
                                                                                         } ?>> Sakit
-                        <input autocomplete="off" type="radio" name="ket" value="Izin" <?php if ($absen->keterangan == 'Izin') {
+                        <input autocomplete="off" type="radio" name="ket" value="Izin" <?php if ($absen->keterangan == 'izin') {
                                                                                             echo 'checked';
                                                                                         } ?>> Izin
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <label for="foto" class="col-sm-2 col-form-label label">Foto</label>
+                    <div class="col-sm-1">
+                        <img class="img-thumbnail img-preview" src="<?= base_url() ?>/absenimg/<?= $absen->foto; ?>" alt="">
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fotoo" name="foto" onchange="previewImg()">
+                            <input type="hidden" name="lama" value="<?= $absen->foto; ?>">
+                            <p style="color: red">Ekstensi yang diperbolehkan .png | .jpg | .jpeg (Ukuran Max 2 MB dan Nama File Sesuai Nama)</p>
+                            <label for="foto" class="custom-file-label" style="background:lightgrey"><?= $absen->foto; ?></label>
+                        </div>
+                    </div>
+                </div>
                 <input type="hidden" name="id_absen" value="<?= $absen->id_absen ?>">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-danger">Reset</button>
             </form>
         </div>
         <!-- /.row -->

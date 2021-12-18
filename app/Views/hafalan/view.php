@@ -29,6 +29,11 @@
                                 <td> : </td>
                                 <td><b><u><?= $hafalan->status; ?></u></b></td>
                             </tr>
+                            <tr>
+                                <td>Ditambahkan</td>
+                                <td> : </td>
+                                <td><b><u><?= $hafalan->dibuat; ?></u></b></td>
+                            </tr>
                         </table>
                     </div>
                 </div>

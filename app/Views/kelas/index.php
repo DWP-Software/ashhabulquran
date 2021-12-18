@@ -26,21 +26,23 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <ul class="nav nav-pills ml-auto">
-                                <li class="nav-item">
-                                    <button type="button" style="margin: 5px;" class="btn btn-success">
-                                        <a href="<?php echo base_url('kelas/input'); ?>" style="color: white;">
-                                            <i class="far fa-plus-square"> Tambah Data</i>
-                                        </a>
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" style="margin: 5px;" class="btn btn-danger tombolHapusBanyak" onclick="javascript:return confirm('Apakah ingin menghapus data ini ?')">
-                                        <i class="far fa-trash-alt"> Hapus Data Terpilih</i>
-                                    </button>
-                                </li>
-                            </ul>
+                            <?php if (session()->get('role') == 'Admin') { ?>
+                                <ul class="nav nav-pills ml-auto">
+                                    <li class="nav-item">
+                                        <button type="button" style="margin: 5px;" class="btn btn-success">
+                                            <a href="<?php echo base_url('kelas/input'); ?>" style="color: white;">
+                                                <i class="far fa-plus-square"> Tambah Data</i>
+                                            </a>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button type="submit" style="margin: 5px;" class="btn btn-danger tombolHapusBanyak" onclick="javascript:return confirm('Apakah ingin menghapus data ini ?')">
+                                            <i class="far fa-trash-alt"> Hapus Data Terpilih</i>
+                                        </button>
+                                    </li>
+                                </ul>
                         </div>
+                    <?php } ?>
                     </div><!-- /.card-header -->
                     <div class="card-body">
                         <table id="example2" class="table table-bordered">
@@ -91,7 +93,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <table id="kelas" class="table table-bordered">
+                        <table id="example1" class="table table-bordered">
                             <thead class="" style="text-align: center;">
                                 <tr>
                                     <th>No</th>

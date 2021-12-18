@@ -118,6 +118,13 @@ class Hafalan extends Controller
         } else {
             $isiid = $request->getPost('id_santri');
         }
+        if (session()->get('role') == 'Santri') {
+            $d = 'Santri';
+        } elseif (session()->get('role') == 'Pengajar') {
+            $d = 'Pengajar';
+        } else {
+            $d = 'Admin';
+        }
         $data = array(
             'id_santri' => $isiid,
             'id_surah' => $request->getPost('id_surah'),
@@ -125,7 +132,8 @@ class Hafalan extends Controller
             'awal_hafalan' => $request->getPost('awal'),
             'akhir_hafalan' => $request->getPost('akhir'),
             'keterangan' => $request->getPost('ket'),
-            'status' => $x
+            'status' => $x,
+            'dibuat' => $d
         );
         $this->hafalan->saveHafalan($data);
         session()->setFlashdata('pesan_hafalan', 'Data Hafalan Ditambahkan.');

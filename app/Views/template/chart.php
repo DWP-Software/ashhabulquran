@@ -41,7 +41,7 @@
         var aduan = {
             labels: $juz,
             datasets: [{
-                label: 'Penduduk per Tahun',
+                label: 'Santri per Tahun',
                 borderColor: 'rgba(60,141,188,0.8)',
                 pointRadius: true,
                 fill: false,

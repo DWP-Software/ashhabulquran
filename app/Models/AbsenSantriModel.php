@@ -47,7 +47,7 @@ class AbsenSantriModel extends Model
             ->join('absensantri', 'santri.id_santri = absensantri.id_santri')
             ->join('pengajar', 'pengajar.id_pengajar = kelas.id_pengajar')
             ->where('pengajar.id_pengajar', $kls)
-            ->groupBy('tanggal')
+            ->groupBy(['id_kelas', 'tanggal'])
             ->get()->getResultArray();
     }
 
@@ -65,7 +65,18 @@ class AbsenSantriModel extends Model
             ->get()->getResultArray();
     }
 
-    public function totket($p = false, $kls = false, $a = false)
+    public function totsen()
+    {
+        return $this->db->table('absensantri')
+            ->select('id_absen, kelas.id_kelas, nama_kelas, tanggal')
+            ->join('santri', 'santri.id_santri = absensantri.id_santri')
+            ->join('kelassantri', 'kelassantri.id_santri = santri.id_santri')
+            ->join('kelas', 'kelas.id_kelas = kelassantri.id_kelas')
+            ->groupBy(['id_kelas', 'tanggal'])
+            ->get()->getResultArray();
+    }
+
+    public function totket($p = false, $kls = false, $a = false, $tgl = false)
     {
         return $this->db->table('absensantri')
             ->select('tanggal, nama_kelas, count(absensantri.keterangan) as jml')
@@ -75,12 +86,14 @@ class AbsenSantriModel extends Model
             ->join('pengajar', 'pengajar.id_pengajar = kelas.id_pengajar')
             ->where('pengajar.id_pengajar', $p)
             ->where('absensantri.keterangan', $kls)
+            ->where('absensantri.tanggal', $tgl)
             ->where('kelas.id_kelas', $a)
             ->groupBy('kelassantri.id_kelas')
+            // ->groupBy('absensantri.tanggal')
             ->get()->getResultArray();
     }
 
-    public function data($a = false)
+    public function data($a = false, $tgl = false)
     {
         return $this->db->table('absensantri')
             // ->select('tanggal, nama_kelas, count(absensantri.keterangan) as jml')
@@ -89,10 +102,11 @@ class AbsenSantriModel extends Model
             ->join('kelas', 'kelas.id_kelas = kelassantri.id_kelas')
             // ->join('pengajar', 'pengajar.id_pengajar = kelas.id_pengajar')
             ->where('kelas.id_kelas', $a)
+            ->where('absensantri.tanggal', $tgl)
             ->get()->getResultArray();
     }
 
-    public function absensan($ket, $kls)
+    public function absensan($ket, $kls, $tgl = false)
     {
         return $this->db->table('absensantri')
             ->select('tanggal, nama_kelas, count(absensantri.keterangan) as jml')
@@ -102,12 +116,26 @@ class AbsenSantriModel extends Model
             ->join('pengajar', 'pengajar.id_pengajar = kelas.id_pengajar')
             // ->where('pengajar.id_pengajar', $p)
             ->where('absensantri.keterangan', $ket)
+            ->where('absensantri.tanggal', $tgl)
             ->where('kelas.id_kelas', $kls)
             ->groupBy('kelassantri.id_kelas')
             ->get()->getResultArray();
     }
 
     public function cariabsen($ket = false)
+    {
+        return $this->db->table('absensantri')
+            ->select('tanggal, nama_kelas, count(absensantri.keterangan) as jml')
+            ->join('santri', 'santri.id_santri = absensantri.id_santri')
+            ->join('kelassantri', 'kelassantri.id_santri = santri.id_santri')
+            ->join('kelas', 'kelas.id_kelas = kelassantri.id_kelas')
+            ->join('pengajar', 'pengajar.id_pengajar = kelas.id_pengajar')
+            ->where('kelas.id_kelas', $ket)
+            ->groupBy('kelas.id_kelas')
+            ->get()->getResultArray();
+    }
+
+    public function caritgl($ket = false, $tgl = false)
     {
         return $this->db->table('absensantri')
             ->select('tanggal, nama_kelas, count(absensantri.keterangan) as jml')

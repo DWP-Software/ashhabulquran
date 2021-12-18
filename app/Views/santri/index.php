@@ -50,7 +50,7 @@
                         </div>
                     </div><!-- /.card-header -->
                     <div class="card-body">
-                        <table id="kelas" class="table table-bordered">
+                        <table id="example1" class="table table-bordered">
                             <thead class="" style="text-align: center;">
                                 <tr>
                                     <th>

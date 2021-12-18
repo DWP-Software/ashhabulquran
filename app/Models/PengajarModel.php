@@ -31,7 +31,26 @@ class PengajarModel extends Model
 
     public function data()
     {
-        return $this->orderBy('id_pengajar', 'DESC')->findAll();
+        return $this->db->table('pengajar')
+            ->join('kelas', 'kelas.id_pengajar = pengajar.id_pengajar')
+            ->orderBy('pengajar.id_pengajar', 'DESC')
+            ->get()->getResultArray();
+    }
+    public function daftar()
+    {
+        return $this->db->table('pengajar')
+            ->join('kelas', 'kelas.id_pengajar = pengajar.id_pengajar')
+            ->orderBy('pengajar.id_pengajar', 'DESC')
+            ->groupBy('pengajar.nama')
+            ->get()->getResultArray();
+    }
+
+    public function data_satu()
+    {
+        return $this->db->table('pengajar')
+
+            ->orderBy('pengajar.id_pengajar', 'DESC')
+            ->get()->getResultArray();
     }
 
     public function pengajar($id = false)

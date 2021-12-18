@@ -38,7 +38,7 @@
                         </div>
                     </div><!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered">
+                        <table id="example1" class="table table-bordered">
                             <thead class="" style="text-align: center;">
                                 <tr>
                                     <th>Tanggal</th>
@@ -46,6 +46,7 @@
                                     <th>Nama</th>
                                     <th>Nama Kelas</th>
                                     <th>Status</th>
+                                    <th>Foto</th>
                                     <?php if (session()->get('role') == 'Admin') { ?>
                                         <th>Aksi</th>
                                     <?php } ?>
@@ -61,6 +62,7 @@
                                         <td><?= $data['nama']; ?></td>
                                         <td><?= $data['nama_kelas']; ?></td>
                                         <td><?= $data['keterangan']; ?></td>
+                                        <td align="center"><img src="/absenimg/<?= $data['foto']; ?>" alt="" style="height: 250px; padding: 1ch;"></td>
                                         <?php if (session()->get('role') == 'Admin') { ?>
                                             <td style="text-align: center;">
                                                 <a href="<?php echo base_url('absen/edit/' . $data['id_absen']); ?>" style="color: black;">

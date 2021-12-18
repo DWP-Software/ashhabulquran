@@ -29,14 +29,25 @@
                                 <form action="/absens/input" method="POST">
                                     <div class="row mb-6">
                                         <div class="col-md-10">
-                                            <select class="form-control select2bs4" name="id_kelas" required>
-                                                <option value="">Pilih Kelas </option>
-                                                <?php
-                                                foreach ($kelas as $p) {
-                                                ?>
-                                                    <option value="<?php echo $p['id_kelas'] ?>"><?php echo $p['nama_kelas'] ?></option>
-                                                <?php } ?>
-                                            </select>
+                                            <?php if (session()->role != 'Admin') { ?>
+                                                <select class="form-control select2bs4" name="id_kelas" required>
+                                                    <option value="">Pilih Kelas </option>
+                                                    <?php
+                                                    foreach ($kelas as $p) {
+                                                    ?>
+                                                        <option value="<?php echo $p['id_kelas'] ?>"><?php echo $p['nama_kelas'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            <?php } else { ?>
+                                                <select class="form-control select2bs4" name="id_kelas" required>
+                                                    <option value="">Pilih Kelas </option>
+                                                    <?php
+                                                    foreach ($kelas as $p) {
+                                                    ?>
+                                                        <option value="<?php echo $p['id_kelas'] ?>"><?= $p['nama']; ?> - <?php echo $p['nama_kelas'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            <?php } ?>
                                         </div>
                                         <div class="col-md-2">
                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -47,7 +58,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered">
+                        <table id="example1" class="table table-bordered">
                             <thead class="" style="text-align: center;">
                                 <tr>
                                     <th>Tanggal</th>
@@ -67,18 +78,18 @@
                                 foreach ($getAbsen as $data) {
                                 ?>
                                     <tr>
-                                        <td><?= $hadir[$no - 1]['tanggal'] ?></td>
+                                        <td><?= $data['tanggal'] ?></td>
                                         <td><?= $data['nama_kelas'] ?></td>
-                                        <td><?= $data['jml'] ?> orang</td>
+                                        <td><?= $jml[$no - 1] ?> orang</td>
                                         <td><?= $hadir[$no - 1]['jml']; ?></td>
                                         <td><?= $izin[$no - 1]['jml']; ?></td>
                                         <td><?= $alfa[$no - 1]['jml']; ?></td>
                                         <td><?= $sakit[$no - 1]['jml']; ?></td>
                                         <td style="text-align: center;">
-                                            <a href="<?php echo base_url('absens/edit/' . $data['id_kelas']); ?>" style="color: black;">
+                                            <a href="<?php echo base_url('absens/edit/' . $data['id_kelas'] . '/' . $data['tanggal']); ?>" style="color: black;">
                                                 <li class="far fa-edit"></li>
                                             </a>
-                                            <a href="<?php echo base_url('absens/view/' . $data['id_kelas']); ?>" style="color: black;">
+                                            <a href="<?php echo base_url('absens/view/' . $data['id_kelas'] . '/' . $data['tanggal']); ?>" style="color: black;">
                                                 <li class="far fa-eye"></li>
                                             </a>
                                         </td>

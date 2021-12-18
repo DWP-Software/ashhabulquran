@@ -11,7 +11,11 @@ class AuthModel extends Model
     public function getUser($id = false, $role = false)
     {
         if ($id == false and $role != false) {
-            return $this->where('role', $role)->orderBy('id_user', 'DESC')->findAll();
+            if ($role != 'Pemilik') {
+                return $this->where('role', $role)->orderBy('id_user', 'DESC')->findAll();
+            } else {
+                return $this->whereIn('role', ['Pemilik', 'Admin'])->orderBy('id_user', 'DESC')->findAll();
+            }
         } elseif ($id != false and $role != false) {
             return $this->where('role', $role)->getWhere(['id_user' => $id])->getRow();
         } else {

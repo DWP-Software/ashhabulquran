@@ -13,6 +13,7 @@ class KelasModel extends Model
         if ($id_kelas === false) {
             return $this->db->table('kelas')
                 ->join('pengajar', 'pengajar.id_pengajar = kelas.id_pengajar')
+                ->orderBy('kelas.id_kelas', 'DESC')
                 ->get()->getResultArray();
         } else {
             return $this->db->table('kelas')

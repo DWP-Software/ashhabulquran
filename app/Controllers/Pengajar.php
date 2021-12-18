@@ -21,7 +21,7 @@ class Pengajar extends Controller
     {
         // dd($this->model->getPeriode());
         $data['title'] = 'Data Pengajar';
-        $data['getDatapengajar'] = $this->model->data();
+        $data['getDatapengajar'] = $this->model->data_satu();
         $data['ket'] = ['Data Pengajar', '<li class="breadcrumb-item active"><a href="/pengajar">Data Pengajar</a></li>'];
         return view('pengajar/index', $data);
     }

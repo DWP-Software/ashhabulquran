@@ -38,6 +38,16 @@
                         <input autocomplete="off" type="text" placeholder="Masukkan Nomor Telepon" class="form-control" id="telp" name="telp">
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <label for="telp" class="col-sm-2 col-form-label">Role</label>
+                    <div class="col-sm-10">
+                        <select class="form-control select2bs4" name="role" id="role" required>
+                            <option value="">Pilih Role </option>
+                            <option value="Pemilik">Pemilik</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

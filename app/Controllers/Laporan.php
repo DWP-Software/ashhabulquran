@@ -142,6 +142,7 @@ class Laporan extends Controller
             for ($i = 0; $i < count($x); $i++) {
                 $t[$i] = $x[$i]['tgl_setor'];
             }
+            // dd($x);
             $data['tgl'] = $t;
             // dd($data['tgl']); 
             $data['santri'] = $x;
