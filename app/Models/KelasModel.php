@@ -13,7 +13,7 @@ class KelasModel extends Model
         if ($id_kelas === false) {
             return $this->db->table('kelas')
                 ->join('pengajar', 'pengajar.id_pengajar = kelas.id_pengajar')
-                ->orderBy('kelas.id_kelas', 'DESC')
+                ->orderBy('pengajar.id_pengajar', 'DESC')
                 ->get()->getResultArray();
         } else {
             return $this->db->table('kelas')
@@ -59,6 +59,15 @@ class KelasModel extends Model
     public function tambah($data)
     {
         $this->db->table('kelas')->insert($data);
+    }
+
+    public function cekhapus($id)
+    {
+        return $this->db->table('kelassantri')
+            ->join('santri', 'santri.id_santri = kelassantri.id_santri')
+            ->join('kelas', 'kelas.id_kelas = kelassantri.id_kelas')
+            ->where('kelas.id_kelas', $id)
+            ->get()->getRow();
     }
 
     public function carikelas($nm)

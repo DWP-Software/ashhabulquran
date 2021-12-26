@@ -6,19 +6,19 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <?php if (session()->getFlashdata('pesan_santri')) : ?>
+                <?php if (session()->getFlashdata('pesan_kelas')) : ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?= session()->getFlashdata('pesan_santri'); ?>
+                        <?= session()->getFlashdata('pesan_kelas'); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                <?php elseif (session()->getFlashdata('danger_santri')) : ?>
+                <?php elseif (session()->getFlashdata('danger_kelas')) : ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?= session()->getFlashdata('danger_santri'); ?>
+                        <?= session()->getFlashdata('danger_kelas'); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                <?php elseif (session()->getFlashdata('warning_santri')) : ?>
+                <?php elseif (session()->getFlashdata('warning_kelas')) : ?>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <?= session()->getFlashdata('warning_santri'); ?>
+                        <?= session()->getFlashdata('warning_kelas'); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php endif; ?>
@@ -96,10 +96,11 @@
                         <table id="example1" class="table table-bordered">
                             <thead class="" style="text-align: center;">
                                 <tr>
-                                    <th>No</th>
+                                    <th></th>
+                                    <th style="width: 4vh;">No</th>
                                     <th>Nama</th>
                                     <th>Nama Kelas</th>
-                                    <th>Aksi</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,20 +109,11 @@
                                 foreach ($getKelasS as $data) {
                                 ?>
                                     <tr>
+                                        <td></td>
                                         <td><?= $no; ?></td>
                                         <td><?= $data['nama']; ?></td>
                                         <td><?= $data['nama_kelas']; ?></td>
-                                        <td style="text-align: center;">
-                                            <a href="<?php echo base_url('/santri/view/' . $data['id_santri']); ?>" style="color: black;">
-                                                <li class="far fa-eye"></li>
-                                            </a>
-                                            <a href="<?php echo base_url('santri/edit/' . $data['id_santri']); ?>" style="color: black;">
-                                                <li class="far fa-edit"></li>
-                                            </a>
-                                            <a href="<?php echo base_url('kelas/deletekelas/' . $data['id']); ?>" style="color: black;">
-                                                <li class="far fa-trash-alt"></li>
-                                            </a>
-                                        </td>
+                                        <td></td>
                                     </tr>
                                 <?php $no++;
                                 }

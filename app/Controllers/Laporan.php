@@ -99,10 +99,9 @@ class Laporan extends Controller
         $html = view('laporan/print_santri', $data);
         $pdf = new pdf('L', PDF_UNIT, 'F4', true, 'UTF-8', false);
         $pdf->SetFont('times', '', 12);
-        $pdf->setHeaderMargin(20);
-        $pdf->setPrintHeader(true);
+        $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
-        $pdf->SetMargins(20, 30, 20, true);
+        $pdf->SetMargins(20, 20, 20, true);
         $pdf->AddPage();
         $pdf->writeHTML($html);
         $this->response->setContentType('application/pdf');
@@ -130,7 +129,7 @@ class Laporan extends Controller
             $y = date('Y', strtotime($tgl));
             $santri = $this->santri->santritgl($k, $b, $y);
             $x = $this->hafalan->tgl($k, $b, $y);
-            if ($santri == NULL and $x == NULL) {
+            if ($santri == NULL or empty($x) == true) {
                 session()->setFlashdata('warning', 'Data tidak ada');
                 return redirect()->to(base_url() . '/laporan/hafalan');
             }

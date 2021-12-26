@@ -121,7 +121,7 @@
                                     <td style="text-align: center;"><?= $no ?></td>
                                     <td><?= $s['nama'] ?></td>
                                     <td><?php if ($s['tgl_lahir'] != NULL) {
-                                            echo (date('Y') - $s['tgl_lahir']) . ' tahun';
+                                            echo (date('Y') - date('Y', strtotime($s['tgl_lahir']))) . ' tahun';
                                         } ?></td>
                                     <td><?= $s['jk'] ?></td>
                                     <td><?= $s['alamat'] ?></td>

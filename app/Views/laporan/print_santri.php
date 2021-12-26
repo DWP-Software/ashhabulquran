@@ -1,6 +1,7 @@
 <div style="text-align: center;">
-    <h3></h3>
-    <h3></h3>
+    <h3><b>DAFTAR SANTRI</b></h3>
+    <h3><b>RUMAH TAHFIZH SHOHIBUL QURAN</b></h3>
+    <h3><b>Koto tinggi pandaisikek kec. X koto Kabupaten Tanah Datar Sumbar</b></h3>
     <h3><b>TAHUN AJARAN <?= $y ?> BULAN <?= $b ?></b></h3>
 </div>
 <div class="col">
@@ -24,7 +25,7 @@
             <td style="text-align: center;"><?= $no ?></td>
             <td><?= $s['nama'] ?></td>
             <td><?php if ($s['tgl_lahir'] != NULL) {
-                    echo (date('Y') - $s['tgl_lahir']) . ' tahun';
+                    echo (date('Y') - date('Y', strtotime($s['tgl_lahir']))) . ' tahun';
                 } ?></td>
             <td><?= $s['jk'] ?></td>
             <td><?= $s['alamat'] ?></td>

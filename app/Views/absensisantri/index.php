@@ -50,7 +50,7 @@
                                             <?php } ?>
                                         </div>
                                         <div class="col-md-2">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" style="margin: 5px;" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -61,6 +61,9 @@
                         <table id="example1" class="table table-bordered">
                             <thead class="" style="text-align: center;">
                                 <tr>
+                                    <th>
+
+                                    </th>
                                     <th>Tanggal</th>
                                     <th>Nama Kelas</th>
                                     <th>Jumlah Santri</th>
@@ -78,6 +81,9 @@
                                 foreach ($getAbsen as $data) {
                                 ?>
                                     <tr>
+                                        <td style="text-align: center;">
+
+                                        </td>
                                         <td><?= $data['tanggal'] ?></td>
                                         <td><?= $data['nama_kelas'] ?></td>
                                         <td><?= $jml[$no - 1] ?> orang</td>
@@ -91,6 +97,9 @@
                                             </a>
                                             <a href="<?php echo base_url('absens/view/' . $data['id_kelas'] . '/' . $data['tanggal']); ?>" style="color: black;">
                                                 <li class="far fa-eye"></li>
+                                            </a>
+                                            <a href="<?php echo base_url('/absens/delete/' . $data['id_kelas'] . '/' . $data['tanggal']); ?>" onclick="javascript:return confirm('Apakah Ingin Menghapus Data Ini?')" style="color: black;">
+                                                <li class="far fa-trash-alt"></li>
                                             </a>
                                         </td>
                                     </tr>

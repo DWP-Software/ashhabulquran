@@ -41,6 +41,7 @@
                         <table id="example1" class="table table-bordered">
                             <thead class="" style="text-align: center;">
                                 <tr>
+                                    <th></th>
                                     <th>Tanggal</th>
                                     <!-- <th>Deskripsi</th> -->
                                     <th>Nama</th>
@@ -58,6 +59,7 @@
                                 foreach ($getAbsen as $data) {
                                 ?>
                                     <tr>
+                                        <td></td>
                                         <td><?= $data['tanggal']; ?></td>
                                         <td><?= $data['nama']; ?></td>
                                         <td><?= $data['nama_kelas']; ?></td>
@@ -68,6 +70,11 @@
                                                 <a href="<?php echo base_url('absen/edit/' . $data['id_absen']); ?>" style="color: black;">
                                                     <li class="far fa-edit"></li>
                                                 </a>
+                                                <?php if (session()->get('role') == 'Admin') { ?>
+                                                    <a href="<?php echo base_url('absen/delete/' . $data['id_absen']); ?>" onclick="javascript:return confirm('Apakah Ingin Menghapus Data Ini?')" style="color: black;">
+                                                        <li class="far fa-trash-alt"></li>
+                                                    </a>
+                                                <?php } ?>
                                             </td>
                                         <?php } ?>
                                     </tr>

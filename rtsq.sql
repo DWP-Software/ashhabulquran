@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 15, 2021 at 12:26 AM
+-- Generation Time: Dec 23, 2021 at 01:58 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -38,14 +38,14 @@ CREATE TABLE IF NOT EXISTS `absenpengajar` (
   PRIMARY KEY (`id_absen`),
   KEY `absen` (`id_pengajar`),
   KEY `kelas` (`id_kelas`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `absenpengajar`
 --
 
 INSERT INTO `absenpengajar` (`id_absen`, `id_pengajar`, `id_kelas`, `tanggal`, `keterangan`, `foto`) VALUES
-(38, 25, 18, '2021-12-12', 'izin', '1639367223_ca5ef217e4893fbfd0b8.jpg');
+(4, 35, 29, '2021-12-23', 'hadir', 'default.jpg');
 
 -- --------------------------------------------------------
 
@@ -61,17 +61,14 @@ CREATE TABLE IF NOT EXISTS `absensantri` (
   `keterangan` enum('hadir','alfa','sakit','izin') NOT NULL,
   PRIMARY KEY (`id_absen`),
   KEY `absens` (`id_santri`)
-) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=256 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `absensantri`
 --
 
 INSERT INTO `absensantri` (`id_absen`, `id_santri`, `tanggal`, `keterangan`) VALUES
-(204, 47, '2021-12-10', 'hadir'),
-(205, 46, '2021-12-10', 'hadir'),
-(206, 45, '2021-12-10', 'hadir'),
-(207, 44, '2021-12-10', 'hadir');
+(228, 102, '2021-12-23', 'hadir');
 
 -- --------------------------------------------------------
 
@@ -86,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `galeri` (
   `tgl` date NOT NULL,
   `foto` varchar(100) NOT NULL,
   PRIMARY KEY (`id_galeri`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `galeri`
@@ -117,7 +114,18 @@ CREATE TABLE IF NOT EXISTS `hafalan` (
   PRIMARY KEY (`id_hafalan`),
   KEY `santrihaf` (`id_santri`),
   KEY `surahhaf` (`id_surah`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hafalan`
+--
+
+INSERT INTO `hafalan` (`id_hafalan`, `id_santri`, `tgl_setor`, `id_surah`, `awal_hafalan`, `akhir_hafalan`, `keterangan`, `status`, `dibuat`) VALUES
+(3, 92, '2021-12-22', 2, 1, 20, NULL, 'Belum Selesai', 'Santri'),
+(4, 68, '2021-12-22', 2, 1, 20, '', 'Belum Selesai', 'Admin'),
+(6, 95, '2021-12-23', 2, 1, 20, '', 'Belum Selesai', 'Admin'),
+(8, 104, '2021-12-23', 5, 1, 10, '', 'Belum Selesai', 'Admin'),
+(9, 104, '2021-12-23', 7, 1, 15, '', 'Belum Selesai', 'Pengajar');
 
 -- --------------------------------------------------------
 
@@ -133,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `kelas` (
   `keterangan_kelas` text NOT NULL,
   PRIMARY KEY (`id_kelas`),
   KEY `pengajar_kelas` (`id_pengajar`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kelas`
@@ -152,7 +160,11 @@ INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `id_pengajar`, `keterangan_kelas`
 (16, 'Aulad', 23, '<p>Usia 8 - 18 tahun</p>Laki - Laki'),
 (17, 'TQM', 18, '<p>1. Santri minimal hafal 1 juz</p><p>2. tidak menjadi santri di TPA / MDA</p><p>3. Santri menghafal juz 29 keatas<br></p>'),
 (18, 'TQM', 25, '<p>1. Santri minimal hafal 1 juz</p><p>2. tidak menjadi santri di TPA / MDA</p><p>3. Santri menghafal juz 29 keatas<br></p>'),
-(22, 'Balita Level2', 14, '<p>-<br></p>');
+(22, 'Balita Level2', 14, '<p>-<br></p>'),
+(25, 'coba kelas', 32, '<p>sadsad</p>'),
+(26, 'kelas 1coba', 33, 'SMA'),
+(27, 'kelas 2 coba', 33, '<p>SMA</p>'),
+(29, 'percobaan kelas 2', 35, '<p>sacara</p>');
 
 -- --------------------------------------------------------
 
@@ -168,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `kelassantri` (
   PRIMARY KEY (`id`),
   KEY `idkelas` (`id_kelas`),
   KEY `idsantri` (`id_santri`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kelassantri`
@@ -208,7 +220,24 @@ INSERT INTO `kelassantri` (`id`, `id_kelas`, `id_santri`) VALUES
 (69, 11, 75),
 (70, 11, 76),
 (71, 11, 77),
-(72, 11, 78);
+(72, 11, 78),
+(75, 25, 81),
+(77, 25, 83),
+(78, 25, 84),
+(79, 25, 85),
+(82, 25, 88),
+(84, 25, 90),
+(85, 25, 91),
+(86, 26, 92),
+(87, 27, 93),
+(88, 27, 94),
+(89, 26, 95),
+(90, 26, 96),
+(91, 27, 97),
+(92, 26, 98),
+(93, 25, 99),
+(94, 18, 100),
+(98, 29, 104);
 
 -- --------------------------------------------------------
 
@@ -233,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `pengajar` (
   `keterangan` varchar(15) NOT NULL,
   `status` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_pengajar`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pengajar`
@@ -247,9 +276,12 @@ INSERT INTO `pengajar` (`id_pengajar`, `no_pengajar`, `nama`, `tempat_lahir`, `t
 (20, 'P20180020', 'Dina Hanifah Apandi', 'Bandung', '2001-03-11', 'Perempuan', 'S1', 'pandai sikek', '1', '2018', '1234567890', 'default.jpg', 'Passive', '-'),
 (21, 'P20190021', 'Lidya Oktaviani', 'Koto Baru', '1998-10-13', 'Perempuan', NULL, NULL, NULL, '2019', '1234567890', 'default.jpg', 'Active', NULL),
 (23, 'P20200023', 'Hamzah', 'Sukoharjo', '1994-07-25', 'Laki - Laki', NULL, NULL, NULL, '2020', '1234567890', 'default.jpg', 'Active', NULL),
-(24, 'P20200024', 'Harif Pratama', 'Padang Panjang', '1996-03-19', 'Laki - Laki', '-', '-', '0', '2020', '082678988970', 'default.jpg', 'Passive', '-'),
+(24, 'P20200024', 'Harif P', 'Padang Panjang', '1996-03-19', 'Laki - Laki', '-', '-', '0', '2020', '082678988970', 'default.jpg', 'Passive', '-'),
 (25, 'P20160025', 'Ainun Mardiyah', 'Medan', '1985-04-12', 'Perempuan', 'Ma\'had Tahfidz', 'Koto tinggi pandai sikek kec. X Koto Kab. Tanah Datar', '30', '2016', '089090890989', 'default.jpg', 'Active', '-'),
-(29, 'P20190029', 'Safari Yati', 'Bukittinggi', '1998-10-13', 'Perempuan', 'SLTA', ' Koto Tinggi Pandai Sikek Kec. X Koto, Kab Tanah Datar', '3', '2019', '0989898298392', 'default.jpg', 'Active', '-');
+(29, 'P20190029', 'Safari Yati', 'Bukittinggi', '1998-10-13', 'Perempuan', 'SLTA', ' Koto Tinggi Pandai Sikek Kec. X Koto, Kab Tanah Datar', '3', '2019', '0989898298392', 'default.jpg', 'Active', '-'),
+(32, 'P20210032', 'alvi', 'padang', '2021-02-02', 'Laki - Laki', 'sma', ' sdsad', '1', '2021', '0888888111111', 'default.jpg', 'Active', '-'),
+(33, 'P20210033', 'Alki Pengajar kelas', 'Pampangan', '1990-12-22', 'Laki - Laki', 'SMA', 'Pandai Sikek', '1', '2021', '085265722502', 'default.jpg', 'Active', '-'),
+(35, 'P20210035', 'Pengajar baru alki', 'Padang', '2021-12-23', 'Laki - Laki', 'SMA', 'Pampangan ', '9', '2021', '089098888888', 'default.jpg', 'Active', '-');
 
 -- --------------------------------------------------------
 
@@ -304,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `santri` (
   `nohp_ortu` varchar(15) DEFAULT NULL,
   `foto` varchar(100) DEFAULT 'default.jpg',
   PRIMARY KEY (`id_santri`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `santri`
@@ -344,7 +376,24 @@ INSERT INTO `santri` (`id_santri`, `no_santri`, `nama`, `tempat_lahir`, `tgl_lah
 (75, 'S210075', 'Zahra Melika', NULL, NULL, 'Perempuan', NULL, NULL, NULL, NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (76, 'S210076', 'Vanesa Reva Violin', NULL, NULL, 'Perempuan', NULL, NULL, NULL, NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
 (77, 'S210077', 'Chesya Bunga Rasika', NULL, NULL, 'Perempuan', NULL, NULL, NULL, NULL, '2021-10-08', NULL, NULL, NULL, NULL, NULL, 'default.jpg'),
-(78, 'S210078', 'Kanaya', 'pandai sikek', '2012-09-05', 'Perempuan', 'sd', 'pandai sikek x koto', '098888888888888', 1, '2021-10-08', 'aki', 'guru', 'sari', 'IRT', '090900900909009', 'default.jpg');
+(78, 'S210078', 'Kanaya', 'pandai sikek', '2012-09-05', 'Perempuan', 'sd', 'pandai sikek x koto', '098888888888888', 1, '2021-10-08', 'aki', 'guru', 'sari', 'IRT', '090900900909009', 'default.jpg'),
+(81, 'S210081', 'santri cubo', 'sdac', '2021-12-22', 'Laki - Laki', 'fasdf', ' afdsa', '089498324887', 1, '2021-12-22', 'qsd', 'qwd', 'ewd', 'dsfdsa', '098098898988989', 'default.jpg'),
+(83, 'S210083', 'santri 2', 'pasod', '2021-12-22', 'Laki - Laki', 'sd', ' asdasd', '0989889898989', 1, '2021-12-22', 'xsasa', 'asdsa', 'sdsa', 'sadax', '098998923211', 'default.jpg'),
+(84, 'S210084', 'santri 3', 'dasdpp', '2021-12-22', 'Laki - Laki', 'sd', ' ghghg', '0999998999999', 1, '2021-12-22', 'sdad', 'dsa', 'da', 'we', '07777766644444', '1640162367_a6801e1626dca600aefd.png'),
+(85, 'S210085', 'santri 4', 'ad', '2021-12-21', 'Laki - Laki', 'sd', ' dsads', '019290823123', 1, '2021-12-15', 'sa', 'asdd', 'asd', 'asdasd', '0989289380830', 'default.jpg'),
+(88, 'S210088', 'santri 5', 'ads', '2000-12-22', 'Laki - Laki', 'sma', ' asdasd', '08772778899111', 1, '2021-12-22', 'asa', 'dki', 'ini', 'asd', '009812988111', 'default.jpg'),
+(90, 'S210090', 'santri 6', 'atu', '2004-12-22', 'Laki - Laki', 'sma', ' asda', '09801111222', 1, '2021-12-22', 'asdnadk', 'asdds', 'sadad', 'dasdsad', '019829083123', 'default.jpg'),
+(91, 'S210091', 'santri 7', 'asd', '2003-12-22', 'Laki - Laki', 'sd', ' asd', '09812121212', 1, '2021-12-21', 'adasd', 'sdwe', 'sta', 'assa', '09812823313', 'default.jpg'),
+(92, 'S210092', 'Albi santri 8', 'Padang', '2004-12-22', 'Laki - Laki', 'SMP', 'Pampangan', '082284030998', 1, '2021-12-22', 'isa', 'singer', 'Ifa', 'IRT', '085158289887', 'default.jpg'),
+(93, 'S210093', 'santri 9', 'asdasd', '2021-12-22', 'Laki - Laki', 'sd', ' asas', '912832133322', 1, '2021-12-22', 'sadsad', 'dsadsddasd', 'add', 'sdasd', '09398338133', 'default.jpg'),
+(94, 'S210094', 'santri 10', 'dsadsad', '2021-12-22', 'Laki - Laki', 'sma', ' asdsd', '90823193131', 1, '2021-12-22', 'asdasd', 'adsa', 'saasda', 'sddwd', '1272303213098', 'default.jpg'),
+(95, 'S210095', 'Santri 11', 'sadasd', '2021-12-22', 'Laki - Laki', 'sd', ' poaksdk', '1111111111111', 1, '2021-12-22', 'asdsadd', 'qweq', 'asdasd', 'ajdnnd', '129023893211', 'default.jpg'),
+(96, 'S210096', 'Santri 12', 'sadasdqw', '2021-12-22', 'Laki - Laki', 'smp', ' awws', '09283093133', 1, '2021-12-22', 'yqwe', 'qssa', 'sfwfcw', 'cerf', '092183281321', 'default.jpg'),
+(97, 'S210097', 'santri 13', 'wqdqdds', '2021-12-22', 'Laki - Laki', 'dasd', ' adqdq', '0198309223131', 1, '2021-12-22', 'hgggg', 'tyccghg', 'wqer', 'qewre', '12323913312', 'default.jpg'),
+(98, 'S210098', 'santri 14', 'adasdd', '2021-12-22', 'Laki - Laki', 'aasddd', ' dqwdq', '123213123313', 1, '2021-12-22', 'dasdadas', 'qDd', 'wqdqwd', 'saxxasd', '01239013113', 'default.jpg'),
+(99, 'S210099', 'santri 15', 'sascdsc', '2021-12-22', 'Laki - Laki', 'ada', ' qwdew', '12312321332131', 1, '2021-12-22', 'sdadd', 'qweq', 'asdsae', 'qwee', '2133123111111', 'default.jpg'),
+(100, 'S210100', 'santri 16', 'asdas', '2021-12-15', 'Laki - Laki', 'dsad', ' adsa', '123213235453', 1, '2021-12-22', 'wda', 'qwdsx', 'cxcs', 'adqwd', '124354364535', 'default.jpg'),
+(104, 'S210104', 'Sibaru', 'Pandai', '2021-12-22', 'Laki - Laki', 'SMA', ' Pandai', '89000000000', 2, '2021-12-23', 'kita', 'guru', 'kira', 'irt', '213244335345', 'default.jpg');
 
 -- --------------------------------------------------------
 
@@ -510,7 +559,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `telp` varchar(20) DEFAULT NULL,
   `role` enum('Admin','Pengajar','Santri','Pemilik') NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -565,7 +614,31 @@ INSERT INTO `user` (`id_user`, `id_data`, `username`, `password`, `telp`, `role`
 (71, 29, 'P20190029', '$2y$10$7B0HFXOLEH.Yo6b/JaWhPexM0OzEH4N7dzYqslVhm8frQQe1RirXa', '0989898298392389', 'Pengajar'),
 (84, NULL, 'admin1', '$2y$10$olOX0HJ6rXmeK31V/lECv.a.wFhBH0GHy0Z1QHRvVue2eRZGzzhzm', '0897987987878', 'Admin'),
 (85, NULL, 'owner', '$2y$10$Rk/J.JGFJdkZJPgdUhxok.zRB/laIWqo1WVrvMsiecVsiYjy00kmS', '082290909090', 'Pemilik'),
-(89, NULL, 'adminrtsq', '$2y$10$rqx0xhsEqOIRxFYLzBwwIubuucZJR8Av92AHVatSsqPhHu29YSoxm', '087898678998', 'Admin');
+(89, NULL, 'adminrtsq', '$2y$10$rqx0xhsEqOIRxFYLzBwwIubuucZJR8Av92AHVatSsqPhHu29YSoxm', '087898678998', 'Admin'),
+(95, 32, 'P20210032', '$2y$10$tkenT1AJZJ6IelRbiyf9m.gV93p7pRAoK3sW67XleyXPMBeJDrMOu', '0888888111111', 'Pengajar'),
+(96, 81, 'S210081', '$2y$10$f0vH8crXAS/C.VzmZvieFe1QcPJllzVi0Q46efquqmsiOLuU/iI3G', '089498324887', 'Santri'),
+(98, 83, 'S210083', '$2y$10$GAVxshDNWcqn2cYvRRfiP.xzrVXkU50E5k8vd0wDuttbIP7vk/K.2', '0989889898989', 'Santri'),
+(99, 84, 'S210084', '$2y$10$Lr9eC7839sk.2ZPFBUTsM.bJ7HfxkabS4nUVsAE6z1czGNeXET9Y.', '0999998999999', 'Santri'),
+(100, 33, 'P20210033', '$2y$10$pPnx7MC1Z0uqP/eBexZZnOscK3vLVuUiIio885zwcJIEe2Pu/o0XS', '085265722502', 'Pengajar'),
+(101, 85, 'S210085', '$2y$10$XNyPGDwE0LnLbvx4FxdskuYVh6GipAPrlDAJAF7DwpDTPq2QcxLKC', '019290823123', 'Santri'),
+(104, 88, 'S210088', '$2y$10$Kv4JdhNc0dEScwW5LQqXb.EYzPN4NbT8.q2/LduFLHF/ZlBrF1l.G', '08772778899111', 'Santri'),
+(106, 90, 'S210090', '$2y$10$fusgiFxZz8P2yUAaBNSlau22eKOR7W/V3y9TR5FtptifxeFPR8g36', '09801111222', 'Santri'),
+(107, 91, 'S210091', '$2y$10$CoHw./qiqCfyMMQvIJFUcuuk4skRwCCoSNWaWoRFvg1.Ce2ZDeDgG', '09812121212', 'Santri'),
+(108, 92, 'S210092', '$2y$10$y1hkwQvfN10t49ubkiKtiuQVFiiBeU2yTW0rHTpwhJnBHIzXrxK12', '210921389831', 'Santri'),
+(110, 93, 'S210093', '$2y$10$uJjllicfU6U6wffnqRySUuiICBkNjDGT8jbhhvBP4ynCS4xQtxVG6', '912832133322', 'Santri'),
+(111, 94, 'S210094', '$2y$10$DDaKD7ikxmbGS8wUAmxxVOKrxyM01g6SSBGyWYQhexbC4ro2aWze6', '90823193131', 'Santri'),
+(112, 95, 'S210095', '$2y$10$F4PcX1S888I4EFX1Gj9iyuQ32FUbktirFGle0jCEqsnQ6K1JsptD.', '1111111111111', 'Santri'),
+(113, 96, 'S210096', '$2y$10$yEYhlFOIksjNoX5HZxxOkeXLWixfhlf1hYkz8SIZpaDB0zM47PAoW', '09283093133', 'Santri'),
+(114, 97, 'S210097', '$2y$10$.hcNXyPAb7u04veV4zaDW..QBqQTs0x7jsUrp22Y6nKcoBUIZghq2', '0198309223131', 'Santri'),
+(115, 98, 'S210098', '$2y$10$thx.9ra/VT6KH3zET5C24.tp/EONIP7tOm.hvUaQcRByFnATKEHYe', '123213123313', 'Santri'),
+(116, 99, 'S210099', '$2y$10$gfe8irCJRh37PQErgnX8VOtwgVyedrLOPpkRJsHdk7.5/thfXkwpS', '12312321332131', 'Santri'),
+(117, 100, 'S210100', '$2y$10$n1IM9LN4R/QWjqGCjH1.SeugR36/fXHxP0mvG9F/QKvVXDl0Awo82', '123213235453', 'Santri'),
+(118, 101, 'S210101', '$2y$10$6TBS9b.p8DoSmSeq5o8sa.eM/GVXveyLCQIIVvdsiy3.Ur8619d3q', '129804892412', 'Santri'),
+(119, 102, 'S210102', '$2y$10$iqoJFbUcRycXDSA/CiZt1Om.NOp6/SBAVbUzQbmBQFkIbUIxBipAK', '0989998667777', 'Santri'),
+(120, 34, 'P20210034', '$2y$10$o8fxtLM5cUu/PKE6alIbW.5uwRhBTP//x4US7mHwjSRv.qRDPI7oy', '0992899999999', 'Pengajar'),
+(121, 103, 'S210103', '$2y$10$BPlvgt6.ppvMo0oTXGmLd.PlUqsqvKI7JpEJZ4GDDxFAeePRXe9PW', '21312321312', 'Santri'),
+(122, 35, 'P20210035', '$2y$10$8Jrk9KbkopH/1kOK5qQpSe7cJ0SeA0z1pMNAkVoxHvDGtvZzXyuvO', '1111111122222', 'Pengajar'),
+(123, 104, 'S210104', '$2y$10$Uix9.D03hpmZtWdapNan9OHxYbtEfTQ/DYzWwTEjccQ.t2leEln8i', '111111111111111', 'Santri');
 
 --
 -- Constraints for dumped tables

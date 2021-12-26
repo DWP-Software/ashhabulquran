@@ -39,12 +39,12 @@ class Kelas extends Controller
     public function add()
     {
         $request = \Config\Services::request();
-        $daftar = array(
+        $data = array(
             'nama_kelas' => $request->getPost('nama'),
             'id_pengajar'   =>  $request->getPost('pengajar'),
             'keterangan_kelas' => $request->getPost('ket'),
         );
-        $this->model->saveKelas($daftar);
+        $this->model->saveKelas($data);
         session()->setFlashdata('pesan_kelas', 'Data Kelas Ditambahkan.');
         return redirect()->to('/kelas/index');
     }
@@ -70,25 +70,42 @@ class Kelas extends Controller
     {
         $request = \Config\Services::request();
         $id_kelas = $request->getPost('id_kelas');
-        $daftar = array(
+        $data = array(
             'nama_kelas' => $request->getPost('nama'),
             'id_pengajar'   =>  $request->getPost('pengajar'),
             'keterangan_kelas' => $request->getPost('ket'),
         );
-        $this->model->editKelas($daftar, $id_kelas);
+        $this->model->editKelas($data, $id_kelas);
 
         session()->setFlashdata('pesan_kelas', 'Data Kelas Berhasi Diedit.');
         return redirect()->to('/kelas');
     }
 
-    public function delete($id_kelas)
+    public function delete($id)
     {
-        $getKelas = $this->model->getKelas($id_kelas);
-        if (isset($getKelas)) {
-            $this->model->hapusKelas($id_kelas);
+        // $getKelas = $this->model->getKelas($id_kelas);
+        // if (isset($getKelas)) {
+        //     $this->model->hapusKelas($id_kelas);
 
-            session()->setFlashdata('danger_kelas', 'Data Kelas Berhasi Dihapus.');
-            return redirect()->to('/kelas/index');
+        //     session()->setFlashdata('danger_kelas', 'Data Kelas Berhasi Dihapus.');
+        //     return redirect()->to('/kelas/index');
+        // } else {
+        //     session()->setFlashdata('warning_kelas', 'Data Kelas Tidak Ditemukan.');
+        //     return redirect()->to('/kelas/index');
+        // }
+
+        $kelass = $this->model->getKelas($id);
+        $cek = $this->model->cekhapus($id);
+        if (isset($kelass)) {
+            if ($cek == NULL) {
+                // $this->kelass->hapusKelasS($id);
+                $this->model->hapusKelas($id);
+                session()->setFlashdata('danger_kelas', 'Data Kelas Berhasi Dihapus.');
+                return redirect()->to('/kelas/index');
+            } else {
+                session()->setFlashdata('warning_kelas', 'Data Kelas Tidak Bisa Dihapus.');
+                return redirect()->to('/kelas/index');
+            }
         } else {
             session()->setFlashdata('warning_kelas', 'Data Kelas Tidak Ditemukan.');
             return redirect()->to('/kelas/index');
@@ -124,11 +141,17 @@ class Kelas extends Controller
     public function deletekelas($id)
     {
         $kelass = $this->kelass->getKelasS($id);
+        // $cek = $this->kelas->cekhapus($id);
         if (isset($kelass)) {
+            // if ($cek == NULL) {
             $this->kelass->hapusKelasS($id);
-
+            // $this->kelas->hapusKelas($id);
             session()->setFlashdata('danger_kelas', 'Data Kelas Berhasi Dihapus.');
             return redirect()->to('/kelas/index');
+            // } else {
+            //     session()->setFlashdata('warning_kelas', 'Data Kelas Tidak Bisa Dihapus.');
+            //     return redirect()->to('/kelas/index');
+            // }
         } else {
             session()->setFlashdata('warning_kelas', 'Data Kelas Tidak Ditemukan.');
             return redirect()->to('/kelas/index');

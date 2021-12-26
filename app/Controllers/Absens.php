@@ -211,19 +211,21 @@ class Absens extends Controller
         return redirect()->to('/absens/index');
     }
 
-    // public function delete($id_absen)
-    // {
-    //     $getAbsens = $this->model->getGaleri($id_absen);
-    //     if (isset($getAbsens)) {
-    //         $this->model->hapusGaleri($id_absen);
-
-    //         session()->setFlashdata('danger_absen', 'Data Absens Berhasi Dihapus.');
-    //         return redirect()->to('/absens/index');
-    //     } else {
-    //         session()->setFlashdata('warning_absen', 'Data Absens Tidak Ditemukan.');
-    //         return redirect()->to('/absens/index');
-    //     }
-    // }
+    public function delete($id_kelas, $tgl)
+    {
+        $getAbsens = $this->model->data($id_kelas, $tgl);
+        // dd($getAbsens);
+        if (isset($getAbsens)) {
+            for ($i = 0; $i < count($getAbsens); $i++) {
+                $this->model->hapusAbsen($getAbsens[$i]['id_absen']);
+            }
+            session()->setFlashdata('danger_absen', 'Data Absens Berhasi Dihapus.');
+            return redirect()->to('/absens/index');
+        } else {
+            session()->setFlashdata('warning_absen', 'Data Absens Tidak Ditemukan.');
+            return redirect()->to('/absens/index');
+        }
+    }
 
     public function view($id_kelas, $tgl)
     {
@@ -268,23 +270,5 @@ class Absens extends Controller
         // dd($data);
         $data['ket'] = ['View Data Absen', '<li class="breadcrumb-item active"><a href="/absens">Data Absens</a></li>', '<li class="breadcrumb-item active">View Data Absen<li>'];
         return view('absensisantri/view', $data);
-    }
-
-    public function hapusbanyak()
-    {
-        $request = \Config\Services::request();
-        $id_absen = $request->getPost('id_absen');
-        if ($id_absen == null) {
-            session()->setFlashdata('warning', 'Data galeri Belum Dipilih, Silahkan Pilih Data Terlebih Dahulu.');
-            return redirect()->to('/absens');
-        }
-
-        $jmldata = count($id_absen);
-        for ($i = 0; $i < $jmldata; $i++) {
-            $this->model->hapusGaleri($id_absen[$i]);
-        }
-
-        session()->setFlashdata('pesan_absen', 'Data galeri Berhasi Dihapus Sebanyak ' . $jmldata . ' Data.');
-        return redirect()->to('/absens');
     }
 }

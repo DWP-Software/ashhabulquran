@@ -142,11 +142,17 @@ class Pengajar extends Controller
     public function delete($id_pengajar)
     {
         $getDatapengajar = $this->model->getDatapengajar($id_pengajar);
+        $x = $this->model->getDatapengajar(false, $id_pengajar);
+        // dd($x);
         if (isset($getDatapengajar)) {
-            $this->model->hapuspengajar($id_pengajar);
-
-            session()->setFlashdata('danger_pengajar', 'Data pengajar Berhasi Dihapus.');
-            return redirect()->to('/pengajar/index');
+            if ($x == NULL) {
+                $this->model->hapuspengajar($id_pengajar);
+                session()->setFlashdata('danger_pengajar', 'Data pengajar Berhasi Dihapus.');
+                return redirect()->to('/pengajar/index');
+            } else {
+                session()->setFlashdata('warning_pengajar', 'Data pengajar Tidak bisa dihapus.');
+                return redirect()->to('/pengajar/index');
+            }
         } else {
             session()->setFlashdata('warning_pengajar', 'Data pengajar Tidak Ditemukan.');
             return redirect()->to('/pengajar/index');
@@ -238,17 +244,34 @@ class Pengajar extends Controller
     {
         $request = \Config\Services::request();
         $id_pengajar = $request->getPost('id_pengajar');
+
         if ($id_pengajar == null) {
-            session()->setFlashdata('warning', 'Data pengajar Belum Dipilih, Silahkan Pilih Data Terlebih Dahulu.');
-            return redirect()->to('/pengajar');
+            session()->setFlashdata('warning_pengajar', 'Data pengajar Belum Dipilih, Silahkan Pilih Data Terlebih Dahulu.');
+            return redirect()->to('/pengajar/index');
         }
 
+        $a = 0;
+        $b = 0;
         $jmldata = count($id_pengajar);
         for ($i = 0; $i < $jmldata; $i++) {
-            $this->model->hapuspengajar($id_pengajar[$i]);
+            $x = $this->model->getDatapengajar(false, $id_pengajar[$i]);
+            if ($x == NULL) {
+                $this->model->hapuspengajar($id_pengajar[$i]);
+                $a++;
+            } else {
+                $b++;
+            }
         }
 
-        session()->setFlashdata('pesan', 'Data pengajar Berhasi Dihapus Sebanyak ' . $jmldata . ' Data.');
-        return redirect()->to('/pengajar');
+        if ($a != 0 and $b == 0) {
+            session()->setFlashdata('pesan_pengajar', 'Data pengajar Berhasi Dihapus Sebanyak ' . $a . ' Data.');
+            return redirect()->to('/pengajar/index');
+        } elseif ($a == 0 and $b != 0) {
+            session()->setFlashdata('warning_pengajar', 'Data pengajar tidak sapat dihapus sebanyak ' . $b . ' Data.');
+            return redirect()->to('/pengajar/index');
+        } elseif ($a != 0 and $b != 0) {
+            session()->setFlashdata('pesan_pengajar', 'Data pengajar Berhasi Dihapus Sebanyak ' . $a . ' Data dan tidak dapat dihapus sebanyak ' . $b . ' data');
+            return redirect()->to('/pengajar/index');
+        }
     }
 }
